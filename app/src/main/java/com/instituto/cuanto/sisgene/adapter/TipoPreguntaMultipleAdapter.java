@@ -85,7 +85,9 @@ public class TipoPreguntaMultipleAdapter extends BaseAdapter {
             tipoPreguntaMultipleItem.setHasView(true);
             System.out.println("Posicion: " + position + " linear vertical insertado");
         }
-        mViewHolder.linear.addView(tipoPreguntaMultipleItem.lvLayout);
+        //para que no me de error
+        if(tipoPreguntaMultipleItem.lvLayout.getParent()==null)
+            mViewHolder.linear.addView(tipoPreguntaMultipleItem.lvLayout);
 
         return convertView;
     }

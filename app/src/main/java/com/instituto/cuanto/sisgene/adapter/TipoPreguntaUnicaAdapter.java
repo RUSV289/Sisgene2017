@@ -24,6 +24,7 @@ public class TipoPreguntaUnicaAdapter extends BaseAdapter {
     LayoutInflater inflater;
     Context context;
     public static TipoPreguntaUnicaAdapter tipoPreguntaUnicaAdapter;
+    //public TipoPreguntaUnicaAdapter tipoPreguntaUnicaAdapter;
 
     public TipoPreguntaUnicaAdapter() {
     }

@@ -88,9 +88,9 @@ public class UsuarioDAO {
 
         try {
             cursor = dataBaseHelper.db.rawQuery("select usp.usp_id " +
-                    " from usuario usup " +
+                    " from usuario usu " +
                     " inner join usuario_persona usp on usu.usu_id = usp.usu_id " +
-                    "where usp.usu_id = ?", arg);
+                    "where usu.usu_usuario = ?", arg);
 
             if (cursor.moveToFirst()) {
                 idUsuario =  cursor.getString(0);
@@ -119,8 +119,9 @@ public class UsuarioDAO {
         try {
 
             cursor = dataBaseHelper.db.rawQuery(" select gr.gru_numero" +
-                    " from usuario usu" +
-                    " inner join grupo gr on usu.usu_id = gr.usu_idsupervisor" +
+                    " from grupo gr " +
+                    " inner join usuario_persona usuper on usuper.gru_id = gr.gru_id" +
+                    " inner join usuario usu on usu.usu_id = usuper.usu_id" +
                     " where usu.usu_usuario = ?", arg);
 
             if (cursor.moveToFirst()) {
@@ -187,8 +188,8 @@ public class UsuarioDAO {
         try {
 
             cursor = dataBaseHelper.db.rawQuery(" select per.per_nombres, per.per_appaterno, per.per_apmaterno " +
-                    " from usuario_persona usp " +
-                    " inner join persona per on usp.per_id = per.per_id" +
+                    " from persona per " +
+                    " inner join usuario_persona usp on usp.per_id = per.per_id" +
                     " where usp.usu_id = ?", arg);
 
             if (cursor.moveToFirst()) {

@@ -82,7 +82,9 @@ public class TipoPreguntaMatrizSimpleAdapter extends BaseAdapter {
             currentTipoPreguntaMatrizSimpleItem.setHasView(true);
             System.out.println("Posicion: "+position+" tabla insertada");
         }
-        mViewHolder.grid.addView(currentTipoPreguntaMatrizSimpleItem.tbLayout);
+        //para que no me de error
+        if(currentTipoPreguntaMatrizSimpleItem.tbLayout.getParent()==null)
+            mViewHolder.grid.addView(currentTipoPreguntaMatrizSimpleItem.tbLayout);
         return convertView;
     }
 
@@ -97,7 +99,7 @@ public class TipoPreguntaMatrizSimpleAdapter extends BaseAdapter {
             final RadioGroup group = new RadioGroup(context);
             final LinearLayout linear= new LinearLayout(context);
 
-            for (int j = 0; j < currentTipoPreguntaMatrizItem.getHorizontal().size(); j++) {
+            for (int j = 0; j < currentTipoPreguntaMatrizItem.getHorizontal().size()+1; j++) { //RRSS se agrego +1
                 if (i!=0 && j != 0) {
                     final RadioButton radio = new RadioButton(context);
                     radio.setText(currentTipoPreguntaMatrizItem.getHorizontal().get(j - 1));

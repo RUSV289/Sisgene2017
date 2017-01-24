@@ -3,11 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.instituto.cuanto.sisgene.PreguntasActivity">
 
-    <item
+    <!--item
         android:id="@+id/finalizarEncuesta"
         android:icon="@drawable/ic_save_black_24dp"
         android:title="Finalizar encuesta"
-        app:showAsAction="always" />
+        app:showAsAction="always" /-->
 
     <item
         android:id="@+id/rechazarEncuesta"

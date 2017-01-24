@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 
 import com.instituto.cuanto.sisgene.bean.CabeceraRespuesta;
+import com.instituto.cuanto.sisgene.entidad.Allegado;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +54,7 @@ public class CabeceraRespuestaDAO {
 
             cursor = dataBaseHelper.db.rawQuery(" select usu.usu_usuario, cer.caer_numero_encuesta, cer.caer_fencuesta, " +
                     " per.per_nombres, per.per_appaterno, " +
-                    " per.per_apmaterno, cer.caer_hora_inicio, cer.caer_hora_fin,cer.caer_tiempo, cer.caer_estado" +
+                    " per.per_apmaterno, cer.caer_hora_inicio, cer.caer_hora_fin,cer.caer_tiempo, cer.caer_estado, cer.caer_id " +
                     " from cab_enc_rpta cer" +
                     " inner join persona per on cer.per_id = per.per_id" +
                     " inner join usuario_persona usp on cer.usp_id = usp.usp_id" +
@@ -73,6 +74,7 @@ public class CabeceraRespuestaDAO {
                     cabeceraResp.setHoraFin((cursor.getString(7) != null) ? cursor.getString(7) : "");
                     cabeceraResp.setTiempo((cursor.getString(8) != null) ? cursor.getString(8) : "");
                     cabeceraResp.setEstado((cursor.getString(9) != null) ? cursor.getString(9) : "");
+                    cabeceraResp.setIdCabeceraEnc((cursor.getInt(10)));
 
                     listaCabeceraRespuesta.add(cabeceraResp);
                 } while (cursor.moveToNext());
@@ -440,7 +442,7 @@ public class CabeceraRespuestaDAO {
 
 
         try {
-            String sql = " INSERT INTO det_enc_rpta (deer_valor_respuesta,caer_id,pre_id)" +
+            String sql = " INSERT INTO det_enc_rpta (deer_valor_respuesta, caer_id, pre_id)" +
                     " VALUES (?,?,?)";
 
             dataBaseHelper.db.execSQL(sql, arg);
@@ -453,6 +455,33 @@ public class CabeceraRespuestaDAO {
                 cursor.close();
         }
         System.out.println("insertarDetEnc ****ERROR****");
+        return response;
+
+    }
+
+    public boolean actualizarDetEnc(Context context, String valorRespuestaNuevo, String idCabEnc, String idPregunta) {
+        Cursor cursor = null;
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
+        String arg[] = {valorRespuestaNuevo, idCabEnc, idPregunta};
+        boolean response = false;
+
+
+        try {
+            String sql = " UPDATE det_enc_rpta " +
+                         " SET deer_valor_respuesta = ? " +
+                         " WHERE caer_id = ? and pre_id = ? ";
+
+            dataBaseHelper.db.execSQL(sql, arg);
+            System.out.println("actualiza DetEnc  ****OK****");
+            response = true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.out.println("Error al actualizar respuesta: " + ex.getMessage());
+        } finally {
+            if (cursor != null)
+                cursor.close();
+        }
+        System.out.println("actualiza DetEnc ****ERROR****");
         return response;
 
     }
@@ -515,6 +544,36 @@ public class CabeceraRespuestaDAO {
         return response;
 
     }
+
+    //En este metodo cambiamos el signo del numero de la encuesta, esto es para una encuesta que fue rechazada
+    public boolean actualizarNumeroDeEncuesta(Context context, String cabRpta_id, int numeroEncuesta) {
+        Cursor cursor = null;
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
+        int numeroEncuestaSignoCambiado = (-1)*numeroEncuesta;
+        String arg[] = {numeroEncuestaSignoCambiado+"", cabRpta_id};
+        System.out.println("Numero a actualizar en la encuesta es: " + numeroEncuestaSignoCambiado+"");
+        boolean response = false;
+
+        System.out.println("Actualizamos el numero de la encuesta " +  cabRpta_id);
+        try {
+            String sql = " UPDATE cab_enc_rpta " +
+                    " SET caer_numero_encuesta = ? " +
+                    " WHERE caer_id = ?";
+
+            dataBaseHelper.db.execSQL(sql, arg);
+
+            response = true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            if (cursor != null)
+                cursor.close();
+        }
+
+        return response;
+
+    }
+
 
     public String obtenerFechayHoraInicioxEncuesta(Context context, String idCabRpta) {
         Cursor cursor = null;
@@ -627,6 +686,130 @@ public class CabeceraRespuestaDAO {
         }
         System.out.println("obtenerDesdeNumEnc, HastaNumEnc:" + desdeNumEnc);
         return desdeNumEnc;
+    }
+
+    public String obteneridUltimaCabeceraString(Context context) {
+        String cabeceraResp = "";
+        Cursor cursor = null;
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
+        try {
+            cursor = DataBaseHelper.db.rawQuery(" select cab.caer_id from cab_enc_rpta cab order by cab.caer_id desc ", null);
+            if (cursor.moveToFirst()) {
+                cabeceraResp = cursor.getString(0);
+            }
+            if (cursor != null) {
+                cursor.close();
+            }
+            return cabeceraResp;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            if (cursor == null) {
+                return null;
+            }
+            cursor.close();
+            return null;
+        } catch (Throwable th) {
+            if (cursor != null) {
+                cursor.close();
+            }
+               return null;
+
+        }
+    }
+
+    public List<Allegado> obtenerAllegadosCabEnc(Context context, String caer_id) {
+
+        Cursor cursor = null;
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
+        List<Allegado> allegados = new ArrayList<>();
+        Allegado allegado;
+
+        try {
+
+            cursor = dataBaseHelper.db.rawQuery(" select alle.all_codigo_identificacion, alle.all_nombre, alle.all_appaterno, alle.all_apmaterno, alle.all_gradofamiliaridad " +
+                    " from allegado alle " +
+                    " inner join cab_enc_rpta cabe  on alle.caer_id = cabe.caer_id " +
+                    " where alle.caer_id = '" + caer_id + "' ", null);
+
+            if (cursor.moveToFirst()) {
+                do{
+                    allegado = new Allegado();
+
+                    allegado.setCodigo_identificacion(cursor.getString(0));
+                    allegado.setNombres(cursor.getString(1));
+                    allegado.setApellido_paterno(cursor.getString(2));
+                    allegado.setApellido_materno(cursor.getString(3));
+                    allegado.setGrado_familiaridad(cursor.getString(4));
+
+                    allegados.add(allegado);
+                } while (cursor.moveToNext());
+            }
+
+            return allegados;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            if (cursor != null)
+                cursor.close();
+        }
+        return null;
+
+    }
+
+    public int obtenerIdPreguntaUltimaRespondida(Context context, String caer_id) {
+
+        Cursor cursor = null;
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
+        int pre_id = -1;
+
+        try {
+
+            cursor = dataBaseHelper.db.rawQuery(" select max(der.pre_id) " +
+                    " from det_enc_rpta der " +
+                    " inner join pregunta pre on der.pre_id = pre.pre_id " +
+                    " inner join cab_enc_rpta cabe  on der.caer_id = cabe.caer_id " +
+                    " where der.caer_id = '" + caer_id + "' and "+
+                    " der.pre_id in (select pre_id from det_enc_rpta) ", null);
+
+            if (cursor.moveToFirst()) {
+                pre_id = cursor.getInt(0);
+            }
+
+            return pre_id;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            if (cursor != null)
+                cursor.close();
+        }
+        return -1;
+
+    }
+
+    public int obtenerNumeroDeEncuesta(Context context, String caer_id) {
+
+        Cursor cursor = null;
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
+        int caer_numero_encuesta_busq = -1;
+
+        try {
+
+            cursor = dataBaseHelper.db.rawQuery(" select caer_numero_encuesta " +
+                    " from cab_enc_rpta " +
+                    " where caer_id = '" + caer_id + "' ", null);
+
+            if (cursor.moveToFirst()) {
+                caer_numero_encuesta_busq = cursor.getInt(0);
+            }
+
+            return caer_numero_encuesta_busq;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            if (cursor != null)
+                cursor.close();
+        }
+        return -1;
 
     }
 

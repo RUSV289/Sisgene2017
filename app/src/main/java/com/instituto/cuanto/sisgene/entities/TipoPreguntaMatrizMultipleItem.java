@@ -70,4 +70,12 @@ public class TipoPreguntaMatrizMultipleItem {
         }
         return found;
     }
+
+    public RespuestaItem isRespuesta(int row, int col){
+        for(int i = 0; i < respuestas.size(); i++){
+            if(respuestas.get(i).getRow() == row && respuestas.get(i).getCol() == col)
+                return respuestas.get(i);
+        }
+        return null;
+    }
 }

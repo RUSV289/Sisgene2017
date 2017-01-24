@@ -31,4 +31,6 @@ public class RespuestaItem {
     public void setTexto(String texto) {
         this.texto = texto;
     }
+
+
 }

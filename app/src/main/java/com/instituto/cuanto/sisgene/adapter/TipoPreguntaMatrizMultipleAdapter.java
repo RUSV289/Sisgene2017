@@ -84,7 +84,11 @@ public class TipoPreguntaMatrizMultipleAdapter extends BaseAdapter {
             currentTipoPreguntaMatrizMultipleItem.setHasView(true);
             System.out.println("Posicion: "+position+" tabla insertada");
         }
-        mViewHolder.grid.addView(currentTipoPreguntaMatrizMultipleItem.tbLayout);
+        //para que no me de error
+
+        if(currentTipoPreguntaMatrizMultipleItem.tbLayout.getParent()==null)
+            mViewHolder.grid.addView(currentTipoPreguntaMatrizMultipleItem.tbLayout);
+
         return convertView;
     }
 

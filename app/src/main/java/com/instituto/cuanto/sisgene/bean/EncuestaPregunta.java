@@ -27,6 +27,12 @@ public class EncuestaPregunta {
     private String pre_nummaxrptamu;
     private String pre_importarordenrptamu;
 
+    //nuevos campos agregados para las restricciones en respuestas tipo abierta
+    private String pre_subtipo;
+    private String pre_tiponumerico;
+    private String pre_desde;
+    private String pre_hasta;
+
     public EncuestaPregunta(){
 
     }
@@ -181,5 +187,38 @@ public class EncuestaPregunta {
 
     public void setPre_importarordenrptamu(String pre_importarordenrptamu) {
         this.pre_importarordenrptamu = pre_importarordenrptamu;
+    }
+
+
+    public String getPre_subtipo() {
+        return pre_subtipo;
+    }
+
+    public void setPre_subtipo(String pre_subtipo) {
+        this.pre_subtipo = pre_subtipo;
+    }
+
+    public String getPre_tiponumerico() {
+        return pre_tiponumerico;
+    }
+
+    public void setPre_tiponumerico(String pre_tiponumerico) {
+        this.pre_tiponumerico = pre_tiponumerico;
+    }
+
+    public String getPre_desde() {
+        return pre_desde;
+    }
+
+    public void setPre_desde(String pre_desde) {
+        this.pre_desde = pre_desde;
+    }
+
+    public String getPre_hasta() {
+        return pre_hasta;
+    }
+
+    public void setPre_hasta(String pre_hasta) {
+        this.pre_hasta = pre_hasta;
     }
 }

@@ -115,7 +115,7 @@ public class EnviarEncuestaDAO {
         DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
         CabeceraEncuestaRpta cabeceraRpta = null;
 
-        String sql = " select usp.usu_id,caer.caer_numero_encuesta,caer.caer_estado,caer.caer_fencuesta,caer.caer_observaciones, " +
+        String sql = " select caer.usp_id,caer.caer_numero_encuesta,caer.caer_estado,caer.caer_fencuesta,caer.caer_observaciones, " +
                 " caer.caer_nconglomerado,caer.caer_nzona_aer,caer.caer_nmanzana,caer.caer_nvivienda,caer.caer_nhogar, " +
                 " caer.caer_narea,caer.caer_ncondicion,caer.caer_codigo_informante,caer.caer_fvisita1,caer.caer_codigo_digitador, " +
                 " caer.caer_maquina_digitador,caer.caer_fdigitacion,caer.caer_hora_inicio,caer.caer_hora_fin,caer.caer_tiempo, " +
@@ -237,7 +237,7 @@ public class EnviarEncuestaDAO {
                     allegado.setGrado_familiaridad((cursor.getString(4) != null) ? cursor.getString(4) : "");
 
                     listAllegado.add(allegado);
-
+                    System.out.println("lista allegados: " + allegado.toString());
                 } while (cursor.moveToNext()) ;
 
             }

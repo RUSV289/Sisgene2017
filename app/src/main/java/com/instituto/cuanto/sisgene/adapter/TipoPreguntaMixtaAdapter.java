@@ -110,6 +110,7 @@ public class TipoPreguntaMixtaAdapter extends BaseAdapter {
                                 if (checkbox.getId() == (alternativas.size()-1)) {
                                     mViewHolder.etPreguntaMixta.setEnabled(true);
                                     mViewHolder.etPreguntaMixta.setVisibility(View.VISIBLE);
+                                    pasarTextoMayucula(mViewHolder.etPreguntaMixta);
                                     mViewHolder.etPreguntaMixta.addTextChangedListener(new TextWatcher() {
                                         @Override
                                         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -150,7 +151,9 @@ public class TipoPreguntaMixtaAdapter extends BaseAdapter {
             currentTipoPreguntaMixtaItem.setHasView(true);
             System.out.println("Posicion: " + position + " linear vertical insertado");
         }
-        mViewHolder.linear.addView(currentTipoPreguntaMixtaItem.lvLayout);
+        //para que no me de error
+        if(currentTipoPreguntaMixtaItem.lvLayout.getParent()==null)
+            mViewHolder.linear.addView(currentTipoPreguntaMixtaItem.lvLayout);
 
         return convertView;
     }
@@ -162,4 +165,30 @@ public class TipoPreguntaMixtaAdapter extends BaseAdapter {
     }
 
 
+
+    public void pasarTextoMayucula(EditText et2){
+        final EditText et = et2;
+        et.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String cadena = s.toString();
+                if(!cadena.equals(cadena.toUpperCase())){
+                    cadena = cadena.toUpperCase();
+                    et.setText(cadena);
+                }
+                int textLength = et.getText().length();
+                et.setSelection(textLength, textLength);
+            }
+        });
+    }
 }

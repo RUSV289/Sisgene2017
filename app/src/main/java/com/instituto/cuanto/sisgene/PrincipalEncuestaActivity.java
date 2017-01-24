@@ -15,6 +15,7 @@ import com.instituto.cuanto.sisgene.bean.CabeceraRespuesta;
 import com.instituto.cuanto.sisgene.constantes.Constants;
 import com.instituto.cuanto.sisgene.dao.CabeceraRespuestaDAO;
 import com.instituto.cuanto.sisgene.dao.UsuarioDAO;
+import com.instituto.cuanto.sisgene.entidad.Allegado;
 import com.instituto.cuanto.sisgene.util.ListViewAdapter;
 import com.instituto.cuanto.sisgene.util.ListViewAdapterEncuestador;
 import com.instituto.cuanto.sisgene.util.Util;
@@ -49,6 +50,14 @@ public class PrincipalEncuestaActivity extends AppCompatActivity {
     String rolUsu;
     String nombreUsu;
     String userUsu;
+
+    List<Allegado> allegados;
+    ArrayList<String> nombresCompletosAllegados;
+    ArrayList<Integer> codigoAllegados;
+    ArrayList<String> nombresAllegados;
+    ArrayList<String> apellidoPaternoAllegados;
+    ArrayList<String> apellidoMaternollegados;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,11 +111,52 @@ public class PrincipalEncuestaActivity extends AppCompatActivity {
                     List<CabeceraRespuesta> listaCabeceraResp = cabeceraRespDAO.obtenerCabeceraRespuestas(PrincipalEncuestaActivity.this);
 
                     CabeceraRespuesta cabeceraResp = listaCabeceraResp.get(posicion - 1);
+                    String caer_id = cabeceraResp.getIdCabeceraEnc()+"";
+
+                    System.out.println("ID CAB ENC: " + caer_id);
+
 
                     if(cabeceraResp.getEstado().equals("I")) {
                         //ACA VA PARA QUE RETOME ENCUESTA
-                        //Intent intent = new Intent(PrincipalEncuestaActivity.this, PrincipalActivity.class);
-                        //startActivity(intent);
+                        //allegados de la encuesta que esta en estado incompleto, estos seran pasados a la clase preguntasActivity
+                        allegados = new ArrayList<>();
+                        nombresCompletosAllegados = new ArrayList<>();
+                        codigoAllegados = new ArrayList<>();
+                        nombresAllegados = new ArrayList<>();
+                        apellidoPaternoAllegados = new ArrayList<>();
+                        apellidoMaternollegados = new ArrayList<>();
+
+
+                        allegados = cabeceraRespDAO.obtenerAllegadosCabEnc(PrincipalEncuestaActivity.this, caer_id);
+                        System.out.println("allegados size: "+allegados.size());
+                        System.out.println("allegados Ap: "+allegados.get(0).getNombres()+" "+allegados.get(0).getApellido_paterno());
+
+                        //llenamos los datos para enviarlos a la vista de preguntas
+                        for(int i = 0; i<allegados.size();i++){
+                            nombresCompletosAllegados.add(allegados.get(i).getNombres()+" "+allegados.get(i).getApellido_paterno()+" "+allegados.get(i).getApellido_materno());
+                            codigoAllegados.add(Integer.parseInt(allegados.get(i).getCodigo_identificacion()));
+                            nombresAllegados.add(allegados.get(i).getNombres());
+                            apellidoPaternoAllegados.add(allegados.get(i).getApellido_paterno());
+                            apellidoMaternollegados.add(allegados.get(i).getApellido_materno());
+                        }
+                        String idPreguntaParaContinuar = cabeceraRespDAO.obtenerIdPreguntaUltimaRespondida(PrincipalEncuestaActivity.this, caer_id)+"";
+
+
+
+                        System.out.println("ID PREGUNTA QUE SE QUEDO " + idPreguntaParaContinuar);
+
+                        Intent intent = new Intent(PrincipalEncuestaActivity.this, PreguntasActivity.class);
+                        intent.putExtra("RETORNAR", "true");
+                        intent.putStringArrayListExtra("nombresCompletosAllegados", nombresCompletosAllegados);
+                        intent.putIntegerArrayListExtra("codigoAllegados", codigoAllegados);
+                        intent.putStringArrayListExtra("nombresAllegados", nombresAllegados);
+                        intent.putStringArrayListExtra("apellidoPaternoAllegados", apellidoPaternoAllegados);
+                        intent.putStringArrayListExtra("apellidoMaternollegados", apellidoMaternollegados);
+                        intent.putExtra("id_preguntaContinuar", idPreguntaParaContinuar);
+                        intent.putExtra("caer_id_retoma",caer_id);
+
+                        startActivity(intent);
+                        finish();
 
                     }else {
                         Toast.makeText(PrincipalEncuestaActivity.this, "ENCUESTA NO TIENE ESTADO INCOMPLETO", Toast.LENGTH_LONG).show();

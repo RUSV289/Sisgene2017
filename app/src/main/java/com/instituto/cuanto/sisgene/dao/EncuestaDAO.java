@@ -57,7 +57,7 @@ public class EncuestaDAO {
                 " sus1.sus_id,sus1.sus_nombre,sus1.sus_nota,sus1.sus_numero_subseccion," +
                 " pre.pre_id,pre.pre_numero,pre.pre_enunciado,pre.pre_explicativo,pre.pre_comentario," +
                 " pre.pre_guia_rpta,pre.pre_tipo_rpta,pre.pre_unica_persona,pre.pre_cant_maxima_items," +
-                " pre.pre_nummaxrptamu,pre.pre_importarordenrptamu" +
+                " pre.pre_nummaxrptamu,pre.pre_importarordenrptamu,pre_subtipo, pre_tiponumerico, pre_desde, pre_hasta" +
                 " FROM  det_encuesta dee " +
                 " INNER JOIN estructura_encuesta ese ON ese.ese_id = dee.ese_id" +
                 " INNER JOIN seccion sec ON sec.sec_id = ese.sec_id" +
@@ -100,6 +100,11 @@ public class EncuestaDAO {
                 encuestaPregunta.setPre_cant_maxima_items((cursor.getString(16) != null) ? cursor.getString(16) : "");
                 encuestaPregunta.setPre_nummaxrptamu((cursor.getString(17) != null) ? cursor.getString(17) : "");
                 encuestaPregunta.setPre_importarordenrptamu((cursor.getString(18) != null) ? cursor.getString(18) : "");
+                encuestaPregunta.setPre_subtipo((cursor.getString(19) != null) ? cursor.getString(19) : "");
+                encuestaPregunta.setPre_tiponumerico((cursor.getString(20) != null) ? cursor.getString(20) : "");
+                encuestaPregunta.setPre_desde((cursor.getString(21) != null) ? cursor.getString(21) : "");
+                encuestaPregunta.setPre_hasta((cursor.getString(22) != null) ? cursor.getString(22) : "");
+
 
             }
             System.out.println("OKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
@@ -126,7 +131,7 @@ public class EncuestaDAO {
                 " sus1.sus_id,sus1.sus_nombre,sus1.sus_nota,sus1.sus_numero_subseccion," +
                 " pre.pre_id,pre.pre_numero,pre.pre_enunciado,pre.pre_explicativo,pre.pre_comentario," +
                 " pre.pre_guia_rpta,pre.pre_tipo_rpta,pre.pre_unica_persona,pre.pre_cant_maxima_items," +
-                " pre.pre_nummaxrptamu,pre.pre_importarordenrptamu" +
+                " pre.pre_nummaxrptamu,pre.pre_importarordenrptamu, pre_subtipo, pre_tiponumerico, pre_desde, pre_hasta" +
                 " FROM  det_encuesta dee " +
                 " INNER JOIN estructura_encuesta ese ON ese.ese_id = dee.ese_id" +
                 " INNER JOIN seccion sec ON sec.sec_id = ese.sec_id" +
@@ -137,7 +142,8 @@ public class EncuestaDAO {
                 " LEFT JOIN pregunta_item pri ON pri.pre_id = pre.pre_id" +
                 " LEFT JOIN item ite ON ite.ite_id = pri.ite_id" +
                 " WHERE pre.pre_id > " + idPregunta + " " +
-                " ORDER BY pre.pre_id ASC";
+                " ORDER BY sec.sec_numero_seccion, pre.pre_numero ";
+                //" ORDER BY pre.pre_id ASC";
 
         try {
 
@@ -165,6 +171,10 @@ public class EncuestaDAO {
                 encuestaPregunta.setPre_cant_maxima_items((cursor.getString(16) != null) ? cursor.getString(16) : "");
                 encuestaPregunta.setPre_nummaxrptamu((cursor.getString(17) != null) ? cursor.getString(17) : "");
                 encuestaPregunta.setPre_importarordenrptamu((cursor.getString(18) != null) ? cursor.getString(18) : "");
+                encuestaPregunta.setPre_subtipo((cursor.getString(19) != null) ? cursor.getString(19) : "");
+                encuestaPregunta.setPre_tiponumerico((cursor.getString(20) != null) ? cursor.getString(20) : "");
+                encuestaPregunta.setPre_desde((cursor.getString(21) != null) ? cursor.getString(21) : "");
+                encuestaPregunta.setPre_hasta((cursor.getString(22) != null) ? cursor.getString(22) : "");
 
             }
             System.out.println("return OK");
@@ -213,6 +223,7 @@ public class EncuestaDAO {
 
             return listPreguntaAlterntiva;
         } catch (Exception ex) {
+            System.out.println("Error Recuperar Lista PreguntaAlternativa: " +ex.getMessage());
             ex.printStackTrace();
         } finally {
             if (cursor != null) {
@@ -220,7 +231,7 @@ public class EncuestaDAO {
                 System.out.println("CLOSE database");
             }
         }
-        return null;
+        return  null;
     }
 
     public List<PreguntaItem> obtenerItems(Context context, String idPregunta) {
@@ -266,7 +277,7 @@ public class EncuestaDAO {
         return listPreguntaItmes;
     }
 
-    public EncuestaPregunta obtenerPreguntaPorNumPregunta(Context context, String numPregunta) {
+    public EncuestaPregunta obtenerPreguntaPorNumPregunta(Context context, String numPregunta, String numSeccion) {
 
         Cursor cursor = null;
         DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
@@ -276,7 +287,7 @@ public class EncuestaDAO {
                 " sus1.sus_id,sus1.sus_nombre,sus1.sus_nota,sus1.sus_numero_subseccion," +
                 " pre.pre_id,pre.pre_numero,pre.pre_enunciado,pre.pre_explicativo,pre.pre_comentario," +
                 " pre.pre_guia_rpta,pre.pre_tipo_rpta,pre.pre_unica_persona,pre.pre_cant_maxima_items," +
-                " pre.pre_nummaxrptamu,pre.pre_importarordenrptamu" +
+                " pre.pre_nummaxrptamu,pre.pre_importarordenrptamu, pre_subtipo, pre_tiponumerico, pre_desde, pre_hasta" +
                 " FROM  det_encuesta dee " +
                 " INNER JOIN estructura_encuesta ese ON ese.ese_id = dee.ese_id" +
                 " INNER JOIN seccion sec ON sec.sec_id = ese.sec_id" +
@@ -286,7 +297,7 @@ public class EncuestaDAO {
                 " LEFT JOIN sub_seccion sus1 ON sus1.sus_id = ese.sus_id_nivel1" +
                 " LEFT JOIN pregunta_item pri ON pri.pre_id = pre.pre_id" +
                 " LEFT JOIN item ite ON ite.ite_id = pri.ite_id" +
-                " WHERE pre.pre_numero = '" + numPregunta + "' " +
+                " WHERE pre.pre_numero = '" + numPregunta + "' and sec.sec_numero_seccion = '" + numSeccion + "' "+
                 " ORDER BY pre.pre_id ASC";
         System.out.println("sql: " + sql);
         try {
@@ -314,6 +325,11 @@ public class EncuestaDAO {
                 encuestaPregunta.setPre_cant_maxima_items((cursor.getString(16) != null) ? cursor.getString(16) : "");
                 encuestaPregunta.setPre_nummaxrptamu((cursor.getString(17) != null) ? cursor.getString(17) : "");
                 encuestaPregunta.setPre_importarordenrptamu((cursor.getString(18) != null) ? cursor.getString(18) : "");
+                encuestaPregunta.setPre_subtipo((cursor.getString(19) != null) ? cursor.getString(19) : "");
+                encuestaPregunta.setPre_tiponumerico((cursor.getString(20) != null) ? cursor.getString(20) : "");
+                encuestaPregunta.setPre_desde((cursor.getString(21) != null) ? cursor.getString(21) : "");
+                encuestaPregunta.setPre_hasta((cursor.getString(22) != null) ? cursor.getString(22) : "");
+
 
             }
             System.out.println("return OK");
@@ -354,4 +370,90 @@ public class EncuestaDAO {
         return response;
     }
 
+
+    public String obtenerValorIdItem(Context context, int idPregunta, String valorItem) {
+        String response = "";
+        Cursor cursor = null;
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
+        try {
+            cursor = DataBaseHelper.db.rawQuery(" select pri.pri_valor  from pregunta p  inner join pregunta_item pri on p.pre_id = pri.pre_id  inner join item i on pri.ite_id = i.ite_id  where p.pre_id =  " + idPregunta + " " + " and i.ite_nombre = '" + valorItem + "' ", null);
+            if (cursor.moveToFirst()) {
+                response = cursor.getString(0);
+            }
+            if (cursor != null) {
+                cursor.close();
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            if (cursor != null) {
+                cursor.close();
+            }
+        } catch (Throwable th) {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+
+        System.out.println("----obtenerValorIdItem----: "+response);
+        return response;
+    }
+
+    public String obtenerValorIdOpcion(Context context, int idPregunta, String valorOpc) {
+        String response = "";
+        Cursor cursor = null;
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
+        try {
+            cursor = DataBaseHelper.db.rawQuery(" select pro.pro_valor  from pregunta p  inner join pregunta_opcion pro on p.pre_id = pro.pre_id  inner join opcion o on pro.opc_id = o.opc_id  where p.pre_id =  " + idPregunta + " " + " and o.opc_nombre = '" + valorOpc + "' ", null);
+            if (cursor.moveToFirst()) {
+                response = cursor.getString(0);
+            }
+            if (cursor != null) {
+                cursor.close();
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            if (cursor != null) {
+                cursor.close();
+            }
+        } catch (Throwable th) {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        System.out.println("----obtenerValorIdOpcion----: "+response);
+        return response;
+    }
+
+    public String obtenerRespuestaDeUnaPregunta(Context context, String caer_id, String pre_id) {
+
+        Cursor cursor = null;
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
+        String valorRespuesta= "";
+
+        String sql = " SELECT der.deer_valor_respuesta " +
+                " FROM det_enc_rpta der " +
+                " INNER JOIN cab_enc_rpta cer ON cer.caer_id = der.caer_id " +
+                " INNER JOIN pregunta pre ON pre.pre_id = der.pre_id " +
+                " WHERE cer.caer_id = '"+caer_id+"' and pre.pre_id = '"+pre_id+"'";
+        System.out.println("sql: " + sql);
+        try {
+
+            cursor = dataBaseHelper.db.rawQuery(sql, null);
+
+            if (cursor.moveToFirst()) {
+                valorRespuesta = (cursor.getString(0)!= null) ? cursor.getString(0) : "";
+
+            }
+            System.out.println("return OK");
+            return valorRespuesta;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            if (cursor != null)
+                cursor.close();
+        }
+        System.out.println("NULLLLL");
+        return null;
+
+    }
 }

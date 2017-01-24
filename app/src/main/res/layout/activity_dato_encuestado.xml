@@ -390,7 +390,7 @@
                             android:id="@+id/etCentroPoblado"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:digits=" abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ"
+                            android:digits=" abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ1234567890"
                             android:ellipsize="end"
                             android:hint="Centro Poblado"
                             android:singleLine="true"
@@ -464,7 +464,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="Manzana N°" />
+                            android:text="Manzana" />
 
                         <EditText
                             android:id="@+id/etManzanaN"
@@ -472,7 +472,7 @@
                             android:layout_height="wrap_content"
                             android:digits=" abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ1234567890"
                             android:ellipsize="end"
-                            android:hint="Manzana N°"
+                            android:hint="Manzana"
                             android:maxLength="4"
                             android:singleLine="true"
                             android:textColor="@color/color_texto"
@@ -613,7 +613,7 @@
                             android:id="@+id/etDireccion"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:digits=" abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ1234567890"
+                            android:digits=" abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ1234567890,."
                             android:ellipsize="end"
                             android:hint="Nombre de Avenida, Calle, Jirón, Pasaje, etc"
                             android:singleLine="true"

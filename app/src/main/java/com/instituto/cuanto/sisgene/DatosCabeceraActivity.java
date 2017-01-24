@@ -1,6 +1,8 @@
 package com.instituto.cuanto.sisgene;
 
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.widget.ArrayAdapter;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -45,8 +47,19 @@ public class DatosCabeceraActivity extends AppCompatActivity {
     Button btSalir_datosCabecera;
     ArrayList<String> nombresEncuestados;
     ArrayList<Integer> codigosIdentEncuestados;
+
+    ArrayList<String> nomEncuestados;
+    ArrayList<String> apePatEncuestados;
+    ArrayList<String> apeMatEncuestados;
+
+
     public static String KEY_ARG_NOMBRE_JEFE = "KEY_ARG_NOMBRE_JEFE";
     public static String KEY_ARG_ID_JEFE = "KEY_ARG_ID_JEFE";
+
+    public static String KEY_ARG_NOM_JEFE = "KEY_ARG_NOM_JEFE";
+    public static String KEY_ARG_APEPAT_JEFE = "KEY_ARG_APEPAT_JEFE";
+    public static String KEY_ARG_APEMAT_JEFE = "KEY_ARG_APEMAT_JEFE";
+
     String userUsu;
 
     protected ArrayAdapter<CharSequence> adapter;
@@ -58,6 +71,11 @@ public class DatosCabeceraActivity extends AppCompatActivity {
 
         nombresEncuestados = new ArrayList<>();
         codigosIdentEncuestados = new ArrayList<>();
+        apeMatEncuestados = new ArrayList<>();
+
+        nomEncuestados = new ArrayList<>();
+        apePatEncuestados = new ArrayList<>();
+
         tvCodigoEncuesta = (TextView) findViewById(R.id.tvCodigoEncuesta);
         tvNombreSupervisor = (TextView) findViewById(R.id.tvNombreSupervisor);
         tvNombreUsuario = (TextView) findViewById(R.id.tvNombreUsuario);
@@ -80,6 +98,19 @@ public class DatosCabeceraActivity extends AppCompatActivity {
         etTelefono = (EditText) findViewById(R.id.etTelefono);
         etCelular = (EditText) findViewById(R.id.etCelular);
         etEmail = (EditText) findViewById(R.id.etEmail);
+
+
+        pasarTextoMayucula(etNombres);
+        pasarTextoMayucula(etApellidoPaterno);
+        pasarTextoMayucula(etApellidoMaterno);
+        pasarTextoMayucula(etCentroPoblado);
+        pasarTextoMayucula(etConglomeradoN);
+        pasarTextoMayucula(etZonaAER);
+        pasarTextoMayucula(etManzanaN);
+        pasarTextoMayucula(etViviendaN);
+        pasarTextoMayucula(etHogarN);
+        pasarTextoMayucula(etDireccion);
+        pasarTextoMayucula(etEmail);
 
         lyNombres = (LinearLayout) findViewById(R.id.lyNombres);
         lyApellidoPaterno = (LinearLayout) findViewById(R.id.lyApellidoPaterno);
@@ -139,16 +170,32 @@ public class DatosCabeceraActivity extends AppCompatActivity {
         userUsu = pref.getString("user", null);
         tvNombreUsuario.setText(nombreUsu);
 
+
         //grupo
         String grupo = usuarioDAO.obtenerGrupoPorUsuario(DatosCabeceraActivity.this, userUsu);
+        System.out.println("USUARIO NOMBRE PASADO PARAMETRO:: "+userUsu);
+        System.out.println("USUARIO GRUPO: "+grupo);
         tvGrupo.setText(grupo);
 
-        //fechas MODIFICAR por las fechas originales de BD
-        tvFechaVigenciaInicio.setText(Util.obtenerFecha());
-        tvFechaVigenciaFinal.setText(Util.obtenerFecha());
+        //fechas
+        tvFecha.setText(Util.obtenerFecha());
+        CabeceraRespuestaDAO cabeceraRespuestaDAO = new CabeceraRespuestaDAO();
+        List<String> fechas = cabeceraRespuestaDAO.obtenerRangoFechasEncuesta(DatosCabeceraActivity.this, userUsu);
 
-        //modificar
-        //tvNombreSupervisor.setText("Gustavo Gómez");
+        if (fechas.get(0) == null)
+            tvFechaVigenciaInicio.setText("");
+        else
+            tvFechaVigenciaInicio.setText((fechas.get(1).toString().trim().substring(8,10))+"/"+(fechas.get(1).toString().trim().substring(5,7))+"/"+(fechas.get(1).toString().trim().substring(0,4)));
+
+        if (fechas.get(1) == null)
+            tvFechaVigenciaFinal.setText("");
+        else
+            tvFechaVigenciaFinal.setText((fechas.get(0).toString().trim().substring(8,10))+"/"+(fechas.get(0).toString().trim().substring(5,7))+"/"+(fechas.get(0).toString().trim().substring(0,4)));
+
+        String idsupervisor = usuarioDAO.obtenerIDSupervisorXEncuestador(DatosCabeceraActivity.this , userUsu);
+        String supervisor = usuarioDAO.obtenerNombreSupervisor(DatosCabeceraActivity.this , idsupervisor);
+        //supervisor
+        tvNombreSupervisor.setText(supervisor);
     }
 
     View.OnClickListener btAceptareIniciarEncuestasetOnClickListener = new View.OnClickListener() {
@@ -213,6 +260,10 @@ public class DatosCabeceraActivity extends AppCompatActivity {
             nombresEncuestados.add(etNombres.getText().toString().trim() + " " + etApellidoPaterno.getText().toString().trim() + " " +
                     etApellidoMaterno.getText().toString().trim());
 
+            nomEncuestados.add(etNombres.getText().toString().trim());
+            apePatEncuestados.add(etApellidoPaterno.getText().toString().trim());
+            apeMatEncuestados.add(etApellidoMaterno.getText().toString().trim());
+
             //insertar direccion en BD
             DireccionDAO direccionDAO = new DireccionDAO();
             direccionDAO.insertarDireccion(DatosCabeceraActivity.this, etDireccion.getText().toString().trim());
@@ -232,7 +283,7 @@ public class DatosCabeceraActivity extends AppCompatActivity {
             if (insertoPersona == true) {
 
                 boolean insertoAlleg = personaDAO.insertarAllegado(DatosCabeceraActivity.this, etNombres.getText().toString().trim(),
-                        etApellidoPaterno.getText().toString().trim(), etApellidoMaterno.getText().toString().trim());
+                        etApellidoPaterno.getText().toString().trim(), etApellidoMaterno.getText().toString().trim(),cabeceraRespuestaDAO.obteneridUltimaCabeceraString(this));
 
                 codigosIdentEncuestados.add(personaDAO.obtenerUltIdAlle(DatosCabeceraActivity.this));
                 int personaId = personaDAO.obtenerUltIdPersona(DatosCabeceraActivity.this);
@@ -283,11 +334,18 @@ public class DatosCabeceraActivity extends AppCompatActivity {
                                 String.valueOf(personaId),
                                 String.valueOf(direccionDAO.obtenerUltIdDireccion(DatosCabeceraActivity.this)));
 
+                        System.out.println("ID ENCUESTADOR : "+usuarioDAO.obtenerIdUsuario(DatosCabeceraActivity.this, userUsu));
+
                         if (insertarCabecera == true) {
                             Toast.makeText(DatosCabeceraActivity.this, "Datos almacenados correctamente", Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(DatosCabeceraActivity.this, NombresPersonasEncuestadasActivity.class);
                             intent.putExtra(KEY_ARG_NOMBRE_JEFE, nombresEncuestados);
                             intent.putExtra(KEY_ARG_ID_JEFE, codigosIdentEncuestados);
+
+                            intent.putExtra(KEY_ARG_NOM_JEFE, nomEncuestados);
+                            intent.putExtra(KEY_ARG_APEPAT_JEFE, apePatEncuestados);
+                            intent.putExtra(KEY_ARG_APEMAT_JEFE, apeMatEncuestados);
+
                             startActivity(intent);
                             finish();
                         } else
@@ -299,10 +357,36 @@ public class DatosCabeceraActivity extends AppCompatActivity {
 
                 }
             } else {
-                Toast.makeText(DatosCabeceraActivity.this, "Error al insertar en base de datos", Toast.LENGTH_LONG).show();
+                Toast.makeText(DatosCabeceraActivity.this, "Error al insertar en base de datos persona Encuestada", Toast.LENGTH_LONG).show();
                 finish();
             }
         }
+    }
+
+    public void pasarTextoMayucula(EditText et2){
+        final EditText et = et2;
+        et.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String cadena = s.toString();
+                if(!cadena.equals(cadena.toUpperCase())){
+                    cadena = cadena.toUpperCase();
+                    et.setText(cadena);
+                }
+                int textLength = et.getText().length();
+                et.setSelection(textLength, textLength);
+            }
+        });
     }
 }
 

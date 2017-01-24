@@ -100,18 +100,19 @@ public class CargaEncuestaDAO {
 
     public boolean cargarPregunta(Context context, String pre_id, String pre_numero, String pre_enunciado, String pre_explicativo,
                                           String pre_comentario, String pre_guia_rpta, String pre_tipo_rpta, String pre_unica_persona,
-                                          String pre_cant_maxima_items, String pre_maxNumRptas, String pre_importaOrdenRptas){
+                                          String pre_cant_maxima_items, String pre_maxNumRptas, String pre_importaOrdenRptas,
+                                          String pre_subtipo, String pre_tipoNumerico, String pre_desde, String pre_hasta){
         Cursor cursor   = null;
         DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
         String arg[] = {pre_id,pre_numero,pre_enunciado,pre_explicativo,pre_comentario,pre_guia_rpta,pre_tipo_rpta,
-                pre_unica_persona,pre_cant_maxima_items,pre_maxNumRptas,pre_importaOrdenRptas};
+                pre_unica_persona,pre_cant_maxima_items,pre_maxNumRptas,pre_importaOrdenRptas, pre_subtipo, pre_tipoNumerico, pre_desde,pre_hasta};
         boolean response = false;
 
 
         try {
             String sql = " INSERT INTO pregunta(pre_id,pre_numero,pre_enunciado,pre_explicativo,pre_comentario,pre_guia_rpta,pre_tipo_rpta," +
-                    " pre_unica_persona,pre_cant_maxima_items,pre_nummaxrptamu,pre_importarordenrptamu)"+
-                    " VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+                    " pre_unica_persona,pre_cant_maxima_items,pre_nummaxrptamu,pre_importarordenrptamu, pre_subtipo, pre_tiponumerico, pre_desde, pre_hasta)"+
+                    " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
             dataBaseHelper.db.execSQL(sql,arg);
 
@@ -134,6 +135,7 @@ public class CargaEncuestaDAO {
         DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
         String arg[] = {sec_id,sec_nombre,sec_nota,sec_numero_seccion};
         boolean response = false;
+
 
 
         try {
@@ -162,7 +164,7 @@ public class CargaEncuestaDAO {
         String arg[] = {sus_id,sus_nombre,sus_nota,sus_numero_seccion};
         boolean response = false;
 
-
+        System.out.println("ANTES DE GUARDAR SUBSECCION: "+sus_nombre+" - "+sus_nota+" - "+sus_numero_seccion+" - "+sus_id);
         try {
             String sql = " INSERT INTO sub_seccion(sus_id,sus_nombre,sus_nota,sus_numero_subseccion)"+
                     " VALUES(?,?,?,?)";
@@ -199,7 +201,7 @@ public class CargaEncuestaDAO {
 
             dataBaseHelper.db.execSQL(sql,arg);
 
-            System.out.println("ERROR AL CARGA ESTRUCTURA ENCUESTA");
+           //System.out.println("ERROR AL CARGA ESTRUCTURA ENCUESTA");
             response = true;
         } catch (Exception ex) {
             System.out.println("ERROR AL CARGA ESTRUCTURA_ENCUESTA: "+ex.getMessage());
@@ -271,16 +273,16 @@ public class CargaEncuestaDAO {
     }
 
     public boolean cargarPreguntaOpcion(Context context, String pro_id, String pre_id, String opc_id,
-                                             String pro_numeralOpcion, String pro_numeroPreguntaSiguiente, String pro_idEncuesta){
+                                             String pro_numeralOpcion, String pro_numeroPreguntaSiguiente, String pro_idEncuesta, String pro_valor){
         Cursor cursor   = null;
         DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
-        String arg[] = {pro_id,pre_id,opc_id,pro_numeralOpcion,pro_numeroPreguntaSiguiente,pro_idEncuesta};
+        String arg[] = {pro_id,pre_id,opc_id,pro_numeralOpcion,pro_numeroPreguntaSiguiente,pro_idEncuesta, pro_valor};
         boolean response = false;
-
+        System.out.println("--##pro_valor  "+ pro_valor);
 
         try {
-            String sql = " INSERT INTO pregunta_opcion(pro_id,pre_id,opc_id,pro_numeralopcion,pro_numeropreguntasiguiente,pro_idencuesta)"+
-                    " VALUES(?,?,?,?,?,?)";
+            String sql = " INSERT INTO pregunta_opcion(pro_id,pre_id,opc_id,pro_numeralopcion,pro_numeropreguntasiguiente,pro_idencuesta, pro_valor)"+
+                    " VALUES(?,?,?,?,?,?,?)";
 
             dataBaseHelper.db.execSQL(sql,arg);
 
@@ -299,17 +301,17 @@ public class CargaEncuestaDAO {
     }
 
     public boolean cargarPreguntaItem(Context context, String pri_id, String pre_id, String ite_id,
-                                        String pri_numeralItem){
+                                        String pri_numeralItem, String pri_valor){
         Cursor cursor   = null;
         DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
-        String arg[] = {pri_id,pre_id,ite_id,pri_numeralItem};
+        String arg[] = {pri_id,pre_id,ite_id,pri_numeralItem, pri_valor};
         boolean response = false;
 
-        System.out.println("PRI_ID : "+pri_id + " -- PRE_ID : "+pre_id + " -- ITEM_ID : "+ite_id+ " -- PRI_NUMERALITEM : "+pri_numeralItem);
+        System.out.println("PRI_ID : "+pri_id + " -- PRE_ID : "+pre_id + " -- ITEM_ID : "+ite_id+ " -- PRI_NUMERALITEM : "+pri_numeralItem+"--##pri_valor--  "+pri_valor);
 
         try {
-            String sql = " INSERT INTO pregunta_item(pri_id,pre_id,ite_id,pri_numeralitem)"+
-                    " VALUES(?,?,?,?)";
+            String sql = " INSERT INTO pregunta_item(pri_id,pre_id,ite_id,pri_numeralitem, pri_valor)"+
+                    " VALUES(?,?,?,?,?)";
 
             dataBaseHelper.db.execSQL(sql,arg);
 
@@ -473,7 +475,7 @@ public class CargaEncuestaDAO {
         String arg[] = {usu_id,usu_usuario,usu_clave,rol_id};
         boolean response = false;
 
-
+        System.out.println("CARGADO USUARIO usuid :: "+usu_id+" usu_usuario:: "+usu_usuario);
         try {
             String sql = " INSERT INTO usuario(usu_id,usu_usuario,usu_clave,rol_id)"+
                     " VALUES(?,?,?,?)";
@@ -501,6 +503,7 @@ public class CargaEncuestaDAO {
         String arg[] = {gru_id,usu_id_supervisor,gru_numero,gru_tot_encuestadores};
         boolean response = false;
 
+        System.out.println("cargando grupo id_grupo:: "+gru_id+ " idsupoervisor:: "+usu_id_supervisor+" grunumero:: "+gru_numero);
 
         try {
             String sql = " INSERT INTO grupo(gru_id,usu_idsupervisor,gru_numero,gru_tot_encuestadores)"+
@@ -558,6 +561,7 @@ public class CargaEncuestaDAO {
         String arg[] = {usp_id,per_id,usu_id,gru_id,dis_id,ubi_id,cae_id,
                 usp_estado,usp_desde_numEnc,usp_hasta_numEnc,usp_tot_encRealizadas,usp_tot_encAsignadas};
         boolean response = false;
+        System.out.println("ID GRUPO DE USUARIOPERSONA :: " + gru_id + "usuid:: "+usu_id);
 
         try {
             String sql = " INSERT INTO usuario_persona(usp_id,per_id,usu_id,gru_id,dis_id,ubi_id," +
@@ -577,6 +581,5 @@ public class CargaEncuestaDAO {
         }
 
         return response;
-
     }
 }

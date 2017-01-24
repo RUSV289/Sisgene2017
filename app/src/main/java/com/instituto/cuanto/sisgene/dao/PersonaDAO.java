@@ -3,6 +3,11 @@ package com.instituto.cuanto.sisgene.dao;
 import android.content.Context;
 import android.database.Cursor;
 
+import com.instituto.cuanto.sisgene.entidad.Allegado;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Jesus on 08/11/2015.
  */
@@ -132,15 +137,15 @@ public class PersonaDAO {
 
     }
 
-    public boolean insertarAllegado(Context context, String nombre, String appaterno, String apmaterno) {
+    public boolean insertarAllegado(Context context, String nombre, String appaterno, String apmaterno, String caer_id) {
         Cursor cursor = null;
         DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
-        String arg[] = {nombre, appaterno, apmaterno};
+        String arg[] = {nombre, appaterno, apmaterno, caer_id};
         boolean response = false;
 
         try {
-            String sql = " INSERT INTO allegado (all_nombre,all_appaterno,all_apmaterno)" +
-                    " VALUES(?,?,?)";
+            String sql = " INSERT INTO allegado (all_nombre,all_appaterno,all_apmaterno,caer_id)" +
+                    " VALUES(?,?,?,?)";
 
             dataBaseHelper.db.execSQL(sql, arg);
 
@@ -151,7 +156,7 @@ public class PersonaDAO {
             if (cursor != null)
                 cursor.close();
         }
-        System.out.println("insertarAllegado: response: " + response);
+        System.out.println("insertarAllegado: response: " + response+"  nombre"+ nombre);
         return response;
     }
 
@@ -162,9 +167,7 @@ public class PersonaDAO {
         int response = 0;
 
         try {
-
             cursor = dataBaseHelper.db.rawQuery("select alle.all_id from allegado alle order by alle.all_id desc", null);
-
             if (cursor.moveToFirst()) {
                 response = cursor.getInt(0);
             }
@@ -180,6 +183,79 @@ public class PersonaDAO {
         return 0;
 
 
+    }
+
+
+
+    public boolean modificarCodigoIdentificacioAllegado(Context context, String nombre, String apellidoPat, String apellidoMat, String newValorcodigoIdentificacion) {
+
+        Cursor cursor = null;
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
+        boolean response = false;
+
+
+        String sql = "UPDATE allegado SET all_codigo_identificacion = '"+newValorcodigoIdentificacion+"'"+
+                      " where all_nombre = '"+nombre+"' "+
+                      " and all_appaterno = '"+apellidoPat+"' "+
+                      " and  all_apmaterno = '"+apellidoMat+"'";
+
+        try {
+
+            dataBaseHelper.db.execSQL(sql);
+
+            response = true;
+            System.out.println("UPDATE CODIGO IDENTIFICACION OK EXITOSO2");
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            if (cursor != null)
+                cursor.close();
+        }
+        return response;
+    }
+
+    public List<Allegado> obtenerAllegadoEncuestada(Context context,String idCabEnc) {
+
+        Cursor cursor = null;
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
+        List<Allegado> listAllegado = new ArrayList<Allegado>();
+        Allegado allegado = null;
+
+        String sql = " select alle.all_codigo_identificacion,alle.all_nombre,alle.all_appaterno, " +
+                " alle.all_apmaterno,alle.all_gradofamiliaridad " +
+                " from cab_enc_rpta caer " +
+                " inner join allegado alle on caer.caer_id = alle.caer_id " +
+                " where caer.caer_id = "+idCabEnc;
+
+        try {
+
+            cursor = dataBaseHelper.db.rawQuery(sql, null);
+
+            if (cursor.moveToFirst()) {
+                do {
+                    allegado = new Allegado();
+                    allegado.setCodigo_identificacion((cursor.getString(0) != null) ? cursor.getString(0) : "");
+                    allegado.setNombres((cursor.getString(1) != null) ? cursor.getString(1) : "");
+                    allegado.setApellido_paterno((cursor.getString(2) != null) ? cursor.getString(2) : "");
+                    allegado.setApellido_materno((cursor.getString(3) != null) ? cursor.getString(3) : "");
+                    allegado.setGrado_familiaridad((cursor.getString(4) != null) ? cursor.getString(4) : "");
+
+                    listAllegado.add(allegado);
+                    System.out.println("lista allegados: " + allegado.toString());
+                } while (cursor.moveToNext()) ;
+
+            }
+            System.out.println("OKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
+            return listAllegado;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            if (cursor != null)
+                cursor.close();
+        }
+        System.out.println("nullllllllllllllllllllllllllllllllllll");
+        return null;
     }
 
 }
