@@ -236,32 +236,21 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            //provisional
-            //ip="192.168.1.41";
-            //puerto="8085";
 
-            /*ip="192.168.1.39";
-            puerto="8080";*/
+            //Servidor cuanto, producción
+            //String ip="190.40.162.59";
+            //String puerto="8085";
 
-            //CUANTO
-            ip="190.40.162.59";
-            puerto="8085";
-
-            /*ip="190.40.162.59";
-            puerto="8085";*/
-
-            /*ip="192.168.1.33";
-            puerto="8085";*/
-
-            //ip="192.168.1.117";
-            //puerto="8089";
+            //Servidor local, desarollo
+            String ip="192.168.1.101";
+            String puerto="8080";
 
             RestAdapter restAdapter = new RestAdapter.Builder()
-                    //.setEndpoint("http://"+ip+":"+puerto+"/resources/WebServiceSISGENE")
-                    //.setEndpoint("http://"+ip+":"+puerto+"/WSSisgene/resources/WebServiceSISGENE")//apache
-                    .setEndpoint("http://"+ip+":"+puerto+"/WSSisgene/WebServiceSISGENE")
-                    //.setEndpoint("http://172.16.139.227:8080/WSSisgene/resources/WebServiceSISGENE")
-                    .build();
+                    //Endpoint anterior
+                    //.setEndpoint("http://"+ip+":"+puerto+"/WSSisgene/WebServiceSISGENE")
+                    .setEndpoint("http://"+ip+":"+puerto+"/sisgene/api/auth")
+
+            .build();
 
             ClienteService service = restAdapter.create(ClienteService.class);
 

@@ -80,7 +80,7 @@ public class EnvioServiceUtil {
         }
     }
 
-    public boolean guardarSDEncuestaEjecutada(Context context, String idCabeceraEncuesta){
+    /*public boolean guardarSDEncuestaEjecutada(Context context, String idCabeceraEncuesta){
 
         System.out.println("IDCAB : "+idCabeceraEncuesta);
 
@@ -88,12 +88,12 @@ public class EnvioServiceUtil {
         this.idCabEnc = idCabeceraEncuesta;
 
         try {
-            /*LeerProperties leerProperties = new LeerProperties();
-            String ipWS = leerProperties.leerIPWS();
-            String puertoWS = leerProperties.leerPUERTOWS();
-            ip = ipWS;
-            puerto = puertoWS;
-*/
+            //LeerProperties leerProperties = new LeerProperties();
+            //String ipWS = leerProperties.leerIPWS();
+            //String puertoWS = leerProperties.leerPUERTOWS();
+            //ip = ipWS;
+            //puerto = puertoWS;
+
             //if(ipWS != null && puertoWS != null){
             new RestCosumeAsyncTask2().execute();
             //}else{
@@ -111,7 +111,7 @@ public class EnvioServiceUtil {
             System.out.println("ERROR EN ENVIO DE INF : "+e.getMessage());
             return false;
         }
-    }
+    }*/
 
     private class RestCosumeAsyncTask extends AsyncTask<String, Void, Void> {
         ProgressDialog progressDialog2;
@@ -143,6 +143,7 @@ public class EnvioServiceUtil {
 
             try {
                 String a = URLEncoder.encode(jsonEnviar, "UTF-8");
+
                 Log.i("Json Enviar codif: ","a");
                 System.out.println("\n\nJSON CODIFICADO : "+a);
                 jsonEnviar = a;
@@ -150,34 +151,22 @@ public class EnvioServiceUtil {
                 e.printStackTrace();
             }
 
-            //PROVISIONAL
-            //ip="192.168.1.41";
-            //puerto="8085";
+            //Servidor cuanto, producción
+            //String ip="190.40.162.59";
+            //String puerto="8085";
 
-            /*ip="192.168.1.39";
-            puerto="8080";*/
-
-            //CUANTO
-            ip="190.40.162.59";
-            puerto="8085";
-
-            /*ip="190.40.162.59";
-            puerto="8085";*/
-
-            /*ip="192.168.1.33";
-            puerto="8085";*/
-
-            //ip="192.168.1.117";
-            //puerto="8089";
+            //Servidor local, desarollo
+            String ip="192.168.1.102";
+            String puerto="8080";
 
             RestAdapter restAdapter = new RestAdapter.Builder()
-                    //.setEndpoint("http://"+ip+":"+puerto+"/WSSisgene/resources/WebServiceSISGENE")
-                    //.setEndpoint("http://"+ip+":"+puerto+"/resources/WebServiceSISGENE")
-                    .setEndpoint("http://"+ip+":"+puerto+"/WSSisgene/WebServiceSISGENE")
+                    //Endpoint anterior
+                    //.setEndpoint("http://" + ip + ":" + puerto + "/WSSisgene/WebServiceSISGENE")
+                    //Endpoint NUEVO
+                    .setEndpoint("http://" + ip + ":" + puerto + "/sisgene/api/auth")
                     .build();
 
             EnvioService service = restAdapter.create(EnvioService.class);
-
             service.repository2Sync(jsonEnviar, new Callback<GuardarEncuestaResponse>() {
                 @Override
                 public void success(GuardarEncuestaResponse guardarEncuestaResponse, Response response) {
@@ -222,8 +211,8 @@ public class EnvioServiceUtil {
         }
     }
 
-
-    private class RestCosumeAsyncTask2 extends AsyncTask<String, Void, Void> {
+    //No se usa guardar en tarjeta SD
+    /*private class RestCosumeAsyncTask2 extends AsyncTask<String, Void, Void> {
         ProgressDialog progressDialog2;
 
         @Override
@@ -288,8 +277,8 @@ public class EnvioServiceUtil {
             puerto="8080";*/
 
             //CUANTO
-            ip="190.40.162.59";
-            puerto="8085";
+            //ip="190.40.162.59";
+            //puerto="8085";
 
             /*ip="190.40.162.59";
             puerto="8085";*/
@@ -309,10 +298,10 @@ public class EnvioServiceUtil {
            // EnvioService service = restAdapter.create(EnvioService.class);
 
 
-
+        /*
             return null;
         }
 
 
-    }
+    }*/
 }

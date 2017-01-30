@@ -1,6 +1,5 @@
 package com.instituto.cuanto.sisgene;
 
-import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -251,7 +250,9 @@ public class ExportarEncuestaActivity extends AppCompatActivity {
             Log.i("Json a a Enviar: ", jsonEnviar);
 
             try {
+                //temporal
                 String a = URLEncoder.encode(jsonEnviar, "UTF-8");
+                //String a = jsonEnviar;
                 System.out.println("\n\nJSON CODIFICADO : " + a);
 
                 jsonEnviar = a;
@@ -260,30 +261,20 @@ public class ExportarEncuestaActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            //PROVISIONAL
-           // String ip="192.168.1.41";
-           // String puerto="8085";
 
-            /*String ip="192.168.1.39";
-            String puerto="8080";*/
+            //Servidor cuanto, producción
+            //String ip="190.40.162.59";
+            //String puerto="8085";
 
-            //CUANTO
-           String ip="190.40.162.59";
-            String puerto="8085";
-
-            /*String ip="190.40.162.59";
-            String puerto="8085";*/
-
-            /*String ip="192.168.1.33";
-            String puerto="8085";*/
-
-
-            //String ip="192.168.1.117";
-            //String puerto="8089";
+            //Servidor local, desarollo
+            String ip="192.168.1.101";
+            String puerto="8080";
 
             RestAdapter restAdapter = new RestAdapter.Builder()
-                    .setEndpoint("http://"+ip+":"+puerto+"/WSSisgene/WebServiceSISGENE")
-                    //.setEndpoint("http://"+ip+":"+puerto+"/resources/WebServiceSISGENE")
+                    //Endpoint anterior
+                    //.setEndpoint("http://" + ip + ":" + puerto + "/WSSisgene/WebServiceSISGENE")
+                    //Endpoint NUEVO
+                    .setEndpoint("http://" + ip + ":" + puerto + "/sisgene/api/auth")
                     .build();
 
 

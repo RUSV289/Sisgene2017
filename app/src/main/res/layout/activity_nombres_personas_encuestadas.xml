@@ -192,7 +192,7 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:text="Final"
+                            android:text="Inicio"
                             android:textColor="@color/color_texto"
                             android:textSize="16sp" />
 
@@ -218,7 +218,7 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:text="Inicio"
+                            android:text="Final"
                             android:textColor="@color/color_texto"
                             android:textSize="16sp" />
 

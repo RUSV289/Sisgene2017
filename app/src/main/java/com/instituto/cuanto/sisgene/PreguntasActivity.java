@@ -581,8 +581,11 @@ public class PreguntasActivity extends AppCompatActivity {
                 Toast.makeText(PreguntasActivity.this, "Pregunta no respondida", Toast.LENGTH_LONG).show();
             }
 
+            if(encuestaPregunta.getPre_comentario().equals(""))
+                comentario = "";
+            else
+                comentario = encuestaPregunta.getPre_comentario();
 
-            comentario = encuestaPregunta.getPre_comentario();
 
             try {
                 System.out.println("obtener ordenIMportancia");
@@ -936,7 +939,7 @@ public class PreguntasActivity extends AppCompatActivity {
             boolean estTemp = false;
             //Si hay conexion a internet invocar al WS para envviar la data
             Log.i("AL SD", "ANTES DE EJECUTAR LA FUNCION");
-            envioServiceUtil.guardarSDEncuestaEjecutada(PreguntasActivity.this, cabeceraRespuesta.getIdCabeceraEnc() + "");
+            //envioServiceUtil.guardarSDEncuestaEjecutada(PreguntasActivity.this, cabeceraRespuesta.getIdCabeceraEnc() + "");
             Log.i("AL SD", "DESPUES DE EJECUTAR LA FUNCION");
             if (conectadoInternet()) {
                 estTemp = envioServiceUtil.enviarEncuestaEjecutada(PreguntasActivity.this, cabeceraRespuesta.getIdCabeceraEnc() + "");

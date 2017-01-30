@@ -250,13 +250,13 @@ public class NombresPersonasEncuestadasActivity extends AppCompatActivity {
         List<String> fechas = cabeceraRespuestaDAO.obtenerRangoFechasEncuesta(NombresPersonasEncuestadasActivity.this, userUsu);
 
         if (fechas.get(0) == null)
-            tvFechaVigenciaInicio.setText("");
-        else
-          tvFechaVigenciaInicio.setText((fechas.get(1).toString().trim().substring(8,10))+"/"+(fechas.get(1).toString().trim().substring(5,7))+"/"+(fechas.get(1).toString().trim().substring(0,4)));
-        if (fechas.get(1) == null)
             tvFechaVigenciaFinal.setText("");
         else
-          tvFechaVigenciaFinal.setText((fechas.get(0).toString().trim().substring(8,10))+"/"+(fechas.get(0).toString().trim().substring(5,7))+"/"+(fechas.get(0).toString().trim().substring(0,4)));
+          tvFechaVigenciaFinal.setText((fechas.get(1).toString().trim().substring(8,10))+"/"+(fechas.get(1).toString().trim().substring(5,7))+"/"+(fechas.get(1).toString().trim().substring(0,4)));
+        if (fechas.get(1) == null)
+            tvFechaVigenciaInicio.setText("");
+        else
+          tvFechaVigenciaInicio.setText((fechas.get(0).toString().trim().substring(8,10))+"/"+(fechas.get(0).toString().trim().substring(5,7))+"/"+(fechas.get(0).toString().trim().substring(0,4)));
 
 
         //Nombre del supervisor
