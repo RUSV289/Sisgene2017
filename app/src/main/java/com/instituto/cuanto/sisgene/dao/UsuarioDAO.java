@@ -152,11 +152,12 @@ public class UsuarioDAO {
 
         try {
 
-            cursor = dataBaseHelper.db.rawQuery(" select usu2.usu_id " +
+            cursor = dataBaseHelper.db.rawQuery(" select usu.usu_id " +
                     " from usuario usu " +
                     " inner join usuario_persona usp on usp.usu_id = usu.usu_id " +
-                    " inner join grupo gru on usp.gru_id = gru.gru_id " +
-                    " inner join usuario usu2 on gru.usu_idsupervisor = usu2.usu_id " +
+                    " inner join usu_per_ccpp upccpp on usp.usp_id = upccpp.usp_id_enc " +
+                    //" inner join usuario usu2 on gru.usu_idsupervisor = usu2.usu_id " +
+                    " inner join usuario usu2 on upccpp.usu_idsupervisor = usu2.usu_id " +
                     " where usu.usu_usuario = ?", arg);
 
             if (cursor.moveToFirst()) {

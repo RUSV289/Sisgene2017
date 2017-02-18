@@ -402,13 +402,13 @@ public class CabeceraRespuestaDAO {
                                    String caer_observaciones, String caer_nconglomerado, String caer_nzona_aer, String caer_nmanzana, String caer_nvivienda,
                                    String caer_nhogar, String caer_narea, String caer_ncondicion, String caer_codigo_informante, String caer_hora_inicio,
                                    String caer_hora_fin, String caer_tiempo, String caer_codigo_centropoblado, String caer_nombre_centropoblado,
-                                   String caer_categoria_centropoblado, String caer_benviado, String caer_fencuestaenviada, String usp_id, String per_id, String dir_id) {
+                                   String caer_categoria_centropoblado, String caer_benviado, String caer_fencuestaenviada, String usp_id, String per_id, String caer_avecaljirpas) {
         Cursor cursor = null;
         DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
         String arg[] = {caer_numero_encuesta, caer_estado, caer_fencuesta, caer_observaciones, caer_nconglomerado, caer_nzona_aer,
                 caer_nmanzana, caer_nvivienda, caer_nhogar, caer_narea, caer_ncondicion, caer_codigo_informante, caer_hora_inicio, caer_hora_fin,
                 caer_tiempo, caer_codigo_centropoblado, caer_nombre_centropoblado, caer_categoria_centropoblado, caer_benviado, caer_fencuestaenviada,
-                usp_id, per_id, dir_id};
+                usp_id, per_id, caer_avecaljirpas};
 
         boolean response = false;
 
@@ -417,7 +417,7 @@ public class CabeceraRespuestaDAO {
                     " caer_observaciones,caer_nconglomerado,caer_nzona_aer,caer_nmanzana,caer_nvivienda, " +
                     " caer_nhogar,caer_narea,caer_ncondicion,caer_codigo_informante,caer_hora_inicio, " +
                     " caer_hora_fin,caer_tiempo,caer_codigo_centropoblado,caer_nombre_centropoblado, " +
-                    " caer_categoria_centropoblado,caer_benviado,caer_fencuestaenviada,usp_id,per_id,dir_id)" +
+                    " caer_categoria_centropoblado,caer_benviado,caer_fencuestaenviada,usp_id,per_id,caer_avecaljirpas)" +
                     " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
             dataBaseHelper.db.execSQL(sql, arg);
@@ -812,5 +812,32 @@ public class CabeceraRespuestaDAO {
         return -1;
 
     }
+
+    public boolean insertarDireccionCabeceraRespuesta(Context context, String caer_id, String direccion){
+        Cursor cursor = null;
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
+        String arg[] = {direccion, caer_id};
+        boolean response = false;
+
+
+        try {
+            String sql = " UPDATE cab_enc_rpta " +
+                    " SET caer_avecaljirpas = ? " +
+                    " WHERE caer_id = ? ";
+
+            dataBaseHelper.db.execSQL(sql, arg);
+            System.out.println("actualiza Direccion En CabRpta  ****OK****");
+            response = true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.out.println("Error al actualizar respuesta: " + ex.getMessage());
+        } finally {
+            if (cursor != null)
+                cursor.close();
+        }
+        System.out.println("actualiza DetEnc ****ERROR****");
+        return response;
+    }
+
 
 }

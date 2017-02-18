@@ -2,6 +2,7 @@ package com.instituto.cuanto.sisgene.dao;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.provider.ContactsContract;
 
 /**
  * Created by Jesus on 10/11/2015.
@@ -40,20 +41,40 @@ public class CargaEncuestaDAO {
     }
 
     public boolean cargarCaratulaEncuesta(Context context, String cae_codigo, String cae_nombre, String cae_descripcion,
-                                  String cae_finicio, String cae_ffin, String cae_estado, String cae_tipo_dispositivo,
-                                  String cae_numero_encuestas_usu, String cae_logo_empresa, String cae_tot_supervisores,
-                                  String cae_id){
+                                          String cae_finicio, String cae_ffin, String cae_estado, String cae_tipo_dispositivo,
+                                          String cae_numero_encuestas_usu, String cae_logo_empresa, String cae_tot_supervisores,
+                                          String cae_id, String cae_b_nencuesta, String cae_b_departamento, String cae_b_provincia,
+                                          String cae_b_distrito, String cae_b_ccppnombre, String cae_b_ccppcategoria, String cae_b_nconglomerado,
+                                          String cae_b_nzona, String cae_b_nmanzana, String cae_b_nvivienda, String cae_b_nhogar,
+                                          String cae_b_area, String cae_b_condicion, String cae_b_avecaljirpas, String cae_b_npuerta,
+                                          String cae_b_interior, String cae_b_piso, String cae_b_etasecgru, String cae_b_manzana,
+                                          String cae_b_lote, String cae_b_km, String cae_b_nomapeinformante, String cae_b_codinformante,
+                                          String cae_b_telcel, String cae_b_referencia, String cae_b_latitud, String cae_b_longitud,
+                                          String cae_b_nomencuestador, String cae_b_fecvisita1, String cae_b_fecvisita2, String cae_b_fecvisita3,
+                                          String cae_b_coddigitador, String cae_b_maquina,String cae_b_fecdigitacion, String cae_b_codsupervisor,
+                                          String cae_b_fecsupervision1, String cae_b_fecsupervision2, String cae_b_tipsupervision1, String cae_b_tipsupervision2,
+                                          String cae_b_tipencuesta, String cae_b_observaciones){
         Cursor cursor   = null;
         DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
         String arg[] = {cae_id,cae_codigo,cae_nombre,cae_descripcion,cae_finicio,cae_ffin,cae_estado,
-                cae_tipo_dispositivo,cae_numero_encuestas_usu,cae_logo_empresa,cae_tot_supervisores};
+                cae_tipo_dispositivo,cae_numero_encuestas_usu,cae_logo_empresa,cae_tot_supervisores, cae_b_nencuesta, cae_b_departamento, cae_b_provincia, cae_b_distrito, cae_b_ccppnombre, cae_b_ccppcategoria, cae_b_nconglomerado,
+                cae_b_nzona, cae_b_nmanzana, cae_b_nvivienda, cae_b_nhogar, cae_b_area, cae_b_condicion, cae_b_avecaljirpas, cae_b_npuerta, cae_b_interior,
+                cae_b_piso, cae_b_etasecgru, cae_b_manzana, cae_b_lote, cae_b_km, cae_b_nomapeinformante, cae_b_codinformante, cae_b_telcel, cae_b_referencia,
+                cae_b_latitud, cae_b_longitud, cae_b_nomencuestador, cae_b_fecvisita1, cae_b_fecvisita2, cae_b_fecvisita3, cae_b_coddigitador, cae_b_maquina,
+                cae_b_fecdigitacion, cae_b_codsupervisor, cae_b_fecsupervision1, cae_b_fecsupervision2, cae_b_tipsupervision1, cae_b_tipsupervision2,
+                cae_b_tipencuesta, cae_b_observaciones};
         boolean response = false;
 
 
         try {
             String sql = " INSERT INTO caratula_encuesta(cae_id,cae_codigo,cae_nombre,cae_descripcion,cae_finicio,cae_ffin,cae_estado," +
-                    " cae_tipo_dispositivo,cae_numero_encuestas_usu,cae_logo_empresa,cae_tot_supervisores)"+
-                    " VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+                    " cae_tipo_dispositivo,cae_numero_encuestas_usu,cae_logo_empresa,cae_tot_supervisores, cae_b_nencuesta, cae_b_departamento, cae_b_provincia, " +
+                    "cae_b_distrito, cae_b_ccppnombre, cae_b_ccppcategoria, cae_b_nconglomerado, cae_b_nzona, cae_b_nmanzana, cae_b_nvivienda, cae_b_nhogar, cae_b_area, cae_b_condicion, cae_b_avecaljirpas, cae_b_npuerta, cae_b_interior, " +
+                    "cae_b_piso, cae_b_etasecgru, cae_b_manzana, cae_b_lote, cae_b_km, cae_b_nomapeinformante, cae_b_codinformante, cae_b_telcel, cae_b_referencia, " +
+                    "cae_b_latitud, cae_b_longitud, cae_b_nomencuestador, cae_b_fecvisita1, cae_b_fecvisita2, cae_b_fecvisita3, cae_b_coddigitador, cae_b_maquina, " +
+                    "cae_b_fecdigitacion, cae_b_codsupervisor, cae_b_fecsupervision1, cae_b_fecsupervision2, cae_b_tipsupervision1, cae_b_tipsupervision2, " +
+                    "cae_b_tipencuesta, cae_b_observaciones) "+
+                    " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ";
 
             dataBaseHelper.db.execSQL(sql,arg);
 
@@ -99,20 +120,20 @@ public class CargaEncuestaDAO {
     }
 
     public boolean cargarPregunta(Context context, String pre_id, String pre_numero, String pre_enunciado, String pre_explicativo,
-                                          String pre_comentario, String pre_guia_rpta, String pre_tipo_rpta, String pre_unica_persona,
+                                          String pre_comentario, String pre_guia_rpta, String pre_tipo_rpta, String pre_unico_patron,
                                           String pre_cant_maxima_items, String pre_maxNumRptas, String pre_importaOrdenRptas,
-                                          String pre_subtipo, String pre_tipoNumerico, String pre_desde, String pre_hasta){
+                                          String pre_subtipo, String pre_tipoNumerico, String pre_desde, String pre_hasta, String pat_id, String pre_importa_orden_rptaabmu, String pre_excluye_ABMU){
         Cursor cursor   = null;
         DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
         String arg[] = {pre_id,pre_numero,pre_enunciado,pre_explicativo,pre_comentario,pre_guia_rpta,pre_tipo_rpta,
-                pre_unica_persona,pre_cant_maxima_items,pre_maxNumRptas,pre_importaOrdenRptas, pre_subtipo, pre_tipoNumerico, pre_desde,pre_hasta};
+                pre_unico_patron,pre_cant_maxima_items,pre_maxNumRptas,pre_importaOrdenRptas, pre_subtipo, pre_tipoNumerico, pre_desde,pre_hasta, pat_id, pre_importa_orden_rptaabmu, pre_excluye_ABMU};
         boolean response = false;
 
 
         try {
             String sql = " INSERT INTO pregunta(pre_id,pre_numero,pre_enunciado,pre_explicativo,pre_comentario,pre_guia_rpta,pre_tipo_rpta," +
-                    " pre_unica_persona,pre_cant_maxima_items,pre_nummaxrptamu,pre_importarordenrptamu, pre_subtipo, pre_tiponumerico, pre_desde, pre_hasta)"+
-                    " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                    " pre_unica_persona,pre_cant_maxima_items,pre_nummaxrptamu,pre_importarordenrptamu, pre_subtipo, pre_tiponumerico, pre_desde, pre_hasta, pat_id, pre_importarordenrptamu, pre_excluye_ABMU)"+
+                    " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
             dataBaseHelper.db.execSQL(sql,arg);
 
@@ -130,17 +151,17 @@ public class CargaEncuestaDAO {
 
     }
 
-    public boolean cargarSeccion(Context context, String sec_nombre, String sec_nota, String sec_numero_seccion, String sec_id){
+    public boolean cargarSeccion(Context context, String sec_nombre, String sec_nota, String sec_numero_seccion, String sec_id, String sec_categoria, String cae_id, String sec_flag_portada){
         Cursor cursor   = null;
         DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
-        String arg[] = {sec_id,sec_nombre,sec_nota,sec_numero_seccion};
+        String arg[] = {sec_id,sec_nombre,sec_nota,sec_numero_seccion, sec_categoria, cae_id, sec_flag_portada};
         boolean response = false;
 
 
 
         try {
-            String sql = " INSERT INTO seccion(sec_id,sec_nombre,sec_nota,sec_numero_seccion)"+
-                    " VALUES(?,?,?,?)";
+            String sql = " INSERT INTO seccion(sec_id,sec_nombre,sec_nota,sec_numero_seccion, sec_categoria, cae_id, sec_flag_portada)"+
+                    " VALUES(?,?,?,?,?,?,?)";
 
             dataBaseHelper.db.execSQL(sql,arg);
 
@@ -158,16 +179,16 @@ public class CargaEncuestaDAO {
 
     }
 
-    public boolean cargarSubseccion(Context context, String sus_nombre, String sus_nota, String sus_numero_seccion, String sus_id){
+    public boolean cargarSubseccion(Context context, String sus_nombre, String sus_nota, String sus_numero_seccion, String sus_id, String cae_id, String seccion, String sus_flag_portada){
         Cursor cursor   = null;
         DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
-        String arg[] = {sus_id,sus_nombre,sus_nota,sus_numero_seccion};
+        String arg[] = {sus_id,sus_nombre,sus_nota,sus_numero_seccion, cae_id, seccion, sus_flag_portada};
         boolean response = false;
 
         System.out.println("ANTES DE GUARDAR SUBSECCION: "+sus_nombre+" - "+sus_nota+" - "+sus_numero_seccion+" - "+sus_id);
         try {
-            String sql = " INSERT INTO sub_seccion(sus_id,sus_nombre,sus_nota,sus_numero_subseccion)"+
-                    " VALUES(?,?,?,?)";
+            String sql = " INSERT INTO sub_seccion(sus_id,sus_nombre,sus_nota,sus_numero_subseccion, cae_id, seccion, sus_flag_portada)"+
+                    " VALUES(?,?,?,?,?,?,?)";
 
             dataBaseHelper.db.execSQL(sql,arg);
 
@@ -184,6 +205,10 @@ public class CargaEncuestaDAO {
         return response;
 
     }
+
+   // public boolean cargarSeccionPortada(Context context, String sus_nombre, String sus_nota, String sus_numero_seccion, String sus_id, String cae_id, String seccion, String sus_flag_portada){
+
+    //}
 
     public boolean cargarEstructura_encuesta(Context context, String sec_id, String sus_id_nivel1, String sus_id_nivel2,
                                              String pre_id, String ese_id){
@@ -273,16 +298,17 @@ public class CargaEncuestaDAO {
     }
 
     public boolean cargarPreguntaOpcion(Context context, String pro_id, String pre_id, String opc_id,
-                                             String pro_numeralOpcion, String pro_numeroPreguntaSiguiente, String pro_idEncuesta, String pro_valor){
+                                             String pro_numeralOpcion, String pro_numeroPreguntaSiguiente, String pro_valor, String cae_id, String pro_tipo_dato, String pro_desde,
+                                             String pro_hasta, String pro_valida_fila_ma, String pro_parte_rpta, String pro_nombre_variable){
         Cursor cursor   = null;
         DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
-        String arg[] = {pro_id,pre_id,opc_id,pro_numeralOpcion,pro_numeroPreguntaSiguiente,pro_idEncuesta, pro_valor};
+        String arg[] = {pro_id,pre_id,opc_id,pro_numeralOpcion,pro_numeroPreguntaSiguiente, pro_valor, cae_id, pro_tipo_dato, pro_desde, pro_hasta, pro_valida_fila_ma, pro_parte_rpta, pro_nombre_variable};
         boolean response = false;
         System.out.println("--##pro_valor  "+ pro_valor);
 
         try {
-            String sql = " INSERT INTO pregunta_opcion(pro_id,pre_id,opc_id,pro_numeralopcion,pro_numeropreguntasiguiente,pro_idencuesta, pro_valor)"+
-                    " VALUES(?,?,?,?,?,?,?)";
+            String sql = " INSERT INTO pregunta_opcion(pro_id,pre_id,opc_id,pro_numeralopcion,pro_numeropreguntasiguiente, pro_valor, cae_id, pro_tipo_dato, pro_desde, pro_hasta, pro_valida_fila_ma, pro_parte_rpta, pro_nombre_variable)"+
+                    " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
             dataBaseHelper.db.execSQL(sql,arg);
 
@@ -301,17 +327,18 @@ public class CargaEncuestaDAO {
     }
 
     public boolean cargarPreguntaItem(Context context, String pri_id, String pre_id, String ite_id,
-                                        String pri_numeralItem, String pri_valor){
+                                        String pri_numeralItem, String pri_valor, String pri_tipo_dato, String pri_desde,
+                                        String pri_hasta, String pri_sin_encabezado){
         Cursor cursor   = null;
         DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
-        String arg[] = {pri_id,pre_id,ite_id,pri_numeralItem, pri_valor};
+        String arg[] = {pri_id,pre_id,ite_id,pri_numeralItem, pri_valor, pri_tipo_dato, pri_desde, pri_hasta, pri_sin_encabezado};
         boolean response = false;
 
         System.out.println("PRI_ID : "+pri_id + " -- PRE_ID : "+pre_id + " -- ITEM_ID : "+ite_id+ " -- PRI_NUMERALITEM : "+pri_numeralItem+"--##pri_valor--  "+pri_valor);
 
         try {
-            String sql = " INSERT INTO pregunta_item(pri_id,pre_id,ite_id,pri_numeralitem, pri_valor)"+
-                    " VALUES(?,?,?,?,?)";
+            String sql = " INSERT INTO pregunta_item(pri_id,pre_id,ite_id,pri_numeralitem, pri_valor, pri_tipo_dato, pri_desde, pri_hasta, pri_sin_encabezado)"+
+                    " VALUES(?,?,?,?,?,?,?,?,?)";
 
             dataBaseHelper.db.execSQL(sql,arg);
 
@@ -496,7 +523,7 @@ public class CargaEncuestaDAO {
 
     }
 
-    public boolean cargarGrupo(Context context, String gru_id, String usu_id_supervisor, String gru_numero,
+    /*public boolean cargarGrupo(Context context, String gru_id, String usu_id_supervisor, String gru_numero,
                                  String gru_tot_encuestadores){
         Cursor cursor   = null;
         DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
@@ -524,6 +551,7 @@ public class CargaEncuestaDAO {
         return response;
 
     }
+    */
 
     public boolean cargarDispositivo(Context context, String dis_id, String dis_nombre, String dis_descripcion,
                                String dis_marca, String dis_modelo, String dis_serie){
@@ -553,20 +581,20 @@ public class CargaEncuestaDAO {
 
     }
 
-    public boolean cargarUsuarioPersona(Context context, String usp_id, String per_id, String usu_id, String gru_id,
-                                 String dis_id, String ubi_id, String cae_id, String usp_estado,
-                                 String usp_desde_numEnc, String usp_hasta_numEnc, String usp_tot_encRealizadas, String usp_tot_encAsignadas){
+    public boolean cargarUsuarioPersona(Context context, String usp_id, String per_id, String usu_id,
+                                 String cae_id,
+                                 String usp_tot_encRealizadas, String usp_tot_encAsignadas){
         Cursor cursor   = null;
         DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
-        String arg[] = {usp_id,per_id,usu_id,gru_id,dis_id,ubi_id,cae_id,
-                usp_estado,usp_desde_numEnc,usp_hasta_numEnc,usp_tot_encRealizadas,usp_tot_encAsignadas};
+        String arg[] = {usp_id,per_id,usu_id,cae_id,
+                usp_tot_encRealizadas,usp_tot_encAsignadas};
         boolean response = false;
-        System.out.println("ID GRUPO DE USUARIOPERSONA :: " + gru_id + "usuid:: "+usu_id);
+        //System.out.println("ID GRUPO DE USUARIOPERSONA :: " + gru_id + "usuid:: "+usu_id);
 
         try {
-            String sql = " INSERT INTO usuario_persona(usp_id,per_id,usu_id,gru_id,dis_id,ubi_id," +
-                    " cae_id,usp_estado,usp_desde_numenc,usp_hasta_numenc,usp_tot_encrealizadas,usp_tot_encasignadas)"+
-                    " VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
+            String sql = " INSERT INTO usuario_persona(usp_id,per_id,usu_id, " +
+                    " cae_id ,usp_tot_encrealizadas,usp_tot_encasignadas)"+
+                    " VALUES(?,?,?,?,?,?)";
 
             dataBaseHelper.db.execSQL(sql,arg);
 
@@ -582,4 +610,150 @@ public class CargaEncuestaDAO {
 
         return response;
     }
+
+    public boolean cargarCcpp(Context context, String ccpp_id, String ubi_id, String ccpp_codigo, String ccpp_centro_poblado, String ccpp_area, String ccpp_cod_area, String ccpp_categoria, String ccpp_cod_categoria){
+
+        Cursor cursor   = null;
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
+        String arg[] = {ccpp_id, ubi_id, ccpp_codigo, ccpp_centro_poblado, ccpp_area, ccpp_cod_area, ccpp_categoria, ccpp_cod_categoria};
+        boolean response = false;
+        System.out.println("Cargando un CCPP");
+
+        try {
+            String sql = " INSERT INTO ccpp(ccpp_id, ubi_id, ccpp_codigo, ccpp_centro_poblado, ccpp_area, ccpp_cod_area, ccpp_categoria, ccpp_cod_categoria) " +
+                "VALUES (?,?,?,?,?,?,?,?)";
+            dataBaseHelper.db.execSQL(sql,arg);
+
+            System.out.println("OK AL USUARIO_PERONA");
+            response = true;
+        } catch (Exception ex) {
+            System.out.println("ERROR AL USUARIO_PERSONA: "+ex.getMessage());
+            ex.printStackTrace();
+        } finally {
+            if (cursor != null)
+                cursor.close();
+        }
+
+        return response;
+    }
+
+    public boolean cargarUpc(Context context, String upc_id, String ccpp_id, String dis_id, String usp_id_enc, String usp_id_sup, String cae_id, String upc_conglomerado, String upc_tot_enc_congl, String upc_desde_numenc, String upc_hasta_numenc, String upc_categoria, String upc_cod_categoria){
+
+        Cursor cursor = null;
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
+        String arg[] = {upc_id, ccpp_id, dis_id, usp_id_enc, usp_id_sup, cae_id, upc_conglomerado, upc_tot_enc_congl, upc_desde_numenc, upc_hasta_numenc, upc_categoria, upc_cod_categoria};
+        boolean response = false;
+        System.out.println("Cargando un UPC");
+        try {
+            String sql = " INSERT INTO usu_per_ccpp(upc_id, ccpp_id, dis_id, usp_id_enc, usp_id_sup, cae_id, upc_conglomerado, upc_tot_enc_congl, upc_desde_numenc, upc_hasta_numenc, upc_categoria, upc_cod_categoria) " +
+                    "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+            dataBaseHelper.db.execSQL(sql,arg);
+
+            System.out.println("OK AL UPC");
+            response = true;
+        }catch (Exception ex) {
+            System.out.println("ERROR AL cargarUpc "+ex.getMessage());
+            ex.printStackTrace();
+        } finally {
+            if (cursor != null)
+                cursor.close();
+        }
+
+        return response;
+    }
+
+    public  boolean cargarCampoopcion(Context context, String cao_id, String cap_id, String cao_codigo, String cao_opcion){
+        Cursor cursor = null;
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
+        String arg[] = {cao_id, cap_id, cao_codigo, cao_opcion};
+        boolean response = false;
+        System.out.println("Cargando un Campoopcion");
+        try{
+            String sql = " INSERT INTO campo_opcion(cao_id, cap_id, cao_codigo, cao_opcion) "+
+                    " VALUES (?,?,?,?)";
+            dataBaseHelper.db.execSQL(sql, arg);
+            System.out.println("OK AL CAMPOOPCION");
+            response = true;
+        }catch (Exception ex){
+            System.out.println("ERROR AL cargarCampoopcion "+ex.getMessage());
+            ex.printStackTrace();
+        } finally {
+            if (cursor != null)
+                cursor.close();
+        }
+
+        return response;
+    }
+
+    public boolean cargarCampoportada(Context context, String cap_id, String sec_id, String sus_id, String cae_id, String cap_numero, String cap_descripcion){
+        Cursor cursor = null;
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
+        String arg[] = {cap_id, sec_id, sus_id, cae_id, cap_numero, cap_descripcion};
+        boolean response = false;
+        System.out.println("Cargando un campoPortada");
+        try{
+            String sql = " INSERT INTO campo_portada(cap_id, sec_id, sus_id, cae_id, cap_numero, cap_descripcion) "+
+                    " VALUES (?,?,?,?,?,?)";
+            dataBaseHelper.db.execSQL(sql, arg);
+            System.out.println("OK AL CARGAR CAMPOPORTADA");
+            response = true;
+        }catch(Exception ex){
+            System.out.println("ERROR AL campoPortada "+ex.getMessage());
+            ex.printStackTrace();
+        }finally {
+            if (cursor != null)
+                cursor.close();
+        }
+
+        return response;
+    }
+
+    public boolean cargarCeldamatriz(Context context, String cem_id, String pro_id, String pri_id, String cem_fila, String cem_columna, String cem_tipo_dato, String cem_desde, String cem_hasta){
+        Cursor cursor = null;
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
+        String arg[] = {cem_id, pro_id, pri_id, cem_fila, cem_columna, cem_tipo_dato, cem_desde, cem_hasta};
+        boolean response = false;
+        System.out.println("Cargando un cargarCeldamatriz");
+        try{
+            String sql = " INSERT INTO celda_matriz(cem_id, pro_id, pri_id, cem_fila, cem_columna, cem_tipo_dato, cem_desde, cem_hasta) "+
+                    " VALUES (?,?,?,?,?,?,?,?)";
+
+            dataBaseHelper.db.execSQL(sql, arg);
+            System.out.println("OK AL CARGAR CELDAMATRIZ");
+            response = true;
+        }catch(Exception ex){
+            System.out.println("ERROR AL CELDAMATRIZ "+ex.getMessage());
+            ex.printStackTrace();
+        }finally {
+            if (cursor != null)
+                cursor.close();
+        }
+
+        return response;
+    }
+
+    public boolean cargarPatron(Context context, String pat_id, String pat_descripcion, String pat_max_items){
+        Cursor cursor = null;
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
+        String arg[] = {pat_id, pat_descripcion, pat_max_items};
+        boolean response = false;
+        System.out.println("Cargando un cargarPatron");
+        try{
+            String sql = " INSERT INTO celda_matriz(pat_id, pat_descripcion, pat_max_items) "+
+                    " VALUES (?,?,?)";
+
+            dataBaseHelper.db.execSQL(sql, arg);
+            System.out.println("OK AL CARGAR PATRON");
+            response = true;
+        }catch(Exception ex){
+            System.out.println("ERROR AL PATRON "+ex.getMessage());
+            ex.printStackTrace();
+        }finally {
+            if (cursor != null)
+                cursor.close();
+        }
+
+        return response;
+    }
+
 }

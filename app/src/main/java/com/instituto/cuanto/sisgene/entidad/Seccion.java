@@ -10,7 +10,36 @@ public class Seccion {
     private String sec_nombre;
     private String sec_nota;
     private String sec_numero_seccion;
-    
+
+    //nuevos campos campos version 2 sisgene 2017
+    private String sec_categoria;
+    private String cae_id;
+    private String sec_flag_portada; //'Flag para diferenciar si SECCION es de la Portada o es del Cuerpo del Cuestionario.            Valores:            0 = No            1 = Si',
+
+    public String getSec_categoria() {
+        return sec_categoria;
+    }
+
+    public void setSec_categoria(String sec_categoria) {
+        this.sec_categoria = sec_categoria;
+    }
+
+    public String getCae_id() {
+        return cae_id;
+    }
+
+    public void setCae_id(String cae_id) {
+        this.cae_id = cae_id;
+    }
+
+    public String getSec_flag_portada() {
+        return sec_flag_portada;
+    }
+
+    public void setSec_flag_portada(String sec_flag_portada) {
+        this.sec_flag_portada = sec_flag_portada;
+    }
+
     public Seccion(){
         //Constructor de la clase Seccion
     }

@@ -79,7 +79,7 @@ public class DatosCabeceraActivity extends AppCompatActivity {
         tvCodigoEncuesta = (TextView) findViewById(R.id.tvCodigoEncuesta);
         tvNombreSupervisor = (TextView) findViewById(R.id.tvNombreSupervisor);
         tvNombreUsuario = (TextView) findViewById(R.id.tvNombreUsuario);
-        tvGrupo = (TextView) findViewById(R.id.tvGrupo);
+       // tvGrupo = (TextView) findViewById(R.id.tvGrupo);
         tvFecha = (TextView) findViewById(R.id.tvFecha);
         tvFechaVigenciaInicio = (TextView) findViewById(R.id.tvFechaVigenciaInicio);
         tvFechaVigenciaFinal = (TextView) findViewById(R.id.tvFechaVigenciaFinal);
@@ -157,10 +157,12 @@ public class DatosCabeceraActivity extends AppCompatActivity {
     }
 
     private void llenarDatosCabecera() {
+        System.out.println("LLENAR DATOS CABECERA");
         EncuestaDAO encuestaDAO = new EncuestaDAO();
         UsuarioDAO usuarioDAO = new UsuarioDAO();
         //codigo de encuesta
         String codEncuesta = encuestaDAO.obtenerCodigoEncuesta(DatosCabeceraActivity.this);
+        System.out.println("codEncuesta: "+codEncuesta);
         if (codEncuesta != null)
             tvCodigoEncuesta.setText(codEncuesta);
 
@@ -168,14 +170,16 @@ public class DatosCabeceraActivity extends AppCompatActivity {
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         String nombreUsu = pref.getString("nombres", null);
         userUsu = pref.getString("user", null);
+        System.out.println("nombreUsu: "+nombreUsu);
         tvNombreUsuario.setText(nombreUsu);
 
 
         //grupo
-        String grupo = usuarioDAO.obtenerGrupoPorUsuario(DatosCabeceraActivity.this, userUsu);
+        //String grupo = usuarioDAO.obtenerGrupoPorUsuario(DatosCabeceraActivity.this, userUsu);
+        String grupo = "1";
         System.out.println("USUARIO NOMBRE PASADO PARAMETRO:: "+userUsu);
         System.out.println("USUARIO GRUPO: "+grupo);
-        tvGrupo.setText(grupo);
+//        tvGrupo.setText(grupo);
 
         //fechas
         tvFecha.setText(Util.obtenerFecha());
@@ -193,7 +197,9 @@ public class DatosCabeceraActivity extends AppCompatActivity {
             tvFechaVigenciaFinal.setText((fechas.get(0).toString().trim().substring(8,10))+"/"+(fechas.get(0).toString().trim().substring(5,7))+"/"+(fechas.get(0).toString().trim().substring(0,4)));
 
         String idsupervisor = usuarioDAO.obtenerIDSupervisorXEncuestador(DatosCabeceraActivity.this , userUsu);
+        System.out.println("idsupervisor : "+idsupervisor);
         String supervisor = usuarioDAO.obtenerNombreSupervisor(DatosCabeceraActivity.this , idsupervisor);
+        System.out.println("supervisor : "+supervisor);
         //supervisor
         tvNombreSupervisor.setText(supervisor);
     }
@@ -264,9 +270,12 @@ public class DatosCabeceraActivity extends AppCompatActivity {
             apePatEncuestados.add(etApellidoPaterno.getText().toString().trim());
             apeMatEncuestados.add(etApellidoMaterno.getText().toString().trim());
 
+            CabeceraRespuestaDAO cabeceraRespuestaDAO = new CabeceraRespuestaDAO();
+
             //insertar direccion en BD
-            DireccionDAO direccionDAO = new DireccionDAO();
-            direccionDAO.insertarDireccion(DatosCabeceraActivity.this, etDireccion.getText().toString().trim());
+            ////DireccionDAO direccionDAO = new DireccionDAO();
+            ////direccionDAO.insertarDireccion(DatosCabeceraActivity.this, etDireccion.getText().toString().trim());
+            //cabeceraRespuestaDAO.insertarDireccionCabeceraRespuesta(DatosCabeceraActivity.this, )
 
             ////
             PersonaDAO personaDAO = new PersonaDAO();
@@ -277,8 +286,6 @@ public class DatosCabeceraActivity extends AppCompatActivity {
                     etApellidoPaterno.getText().toString().trim(), etApellidoMaterno.getText().toString().trim(),
                     etDni.getText().toString().trim(), etTelefono.getText().toString().trim(),
                     etCelular.getText().toString().trim(), etEmail.getText().toString().trim());
-
-            CabeceraRespuestaDAO cabeceraRespuestaDAO = new CabeceraRespuestaDAO();
 
             if (insertoPersona == true) {
 
@@ -332,7 +339,7 @@ public class DatosCabeceraActivity extends AppCompatActivity {
                                 "",
                                 usuarioDAO.obtenerIdUsuario(DatosCabeceraActivity.this, userUsu),
                                 String.valueOf(personaId),
-                                String.valueOf(direccionDAO.obtenerUltIdDireccion(DatosCabeceraActivity.this)));
+                                String.valueOf(etDireccion.getText().toString().trim()));
 
                         System.out.println("ID ENCUESTADOR : "+usuarioDAO.obtenerIdUsuario(DatosCabeceraActivity.this, userUsu));
 

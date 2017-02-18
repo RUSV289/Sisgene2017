@@ -22,7 +22,7 @@ public class EncuestaPregunta {
     private String pre_comentario;
     private String pre_guia_rpta;
     private String pre_tipo_rpta;
-    private String pre_unica_persona;
+    private String pre_unico_patron;
     private String pre_cant_maxima_items;
     private String pre_nummaxrptamu;
     private String pre_importarordenrptamu;
@@ -157,12 +157,12 @@ public class EncuestaPregunta {
         this.pre_tipo_rpta = pre_tipo_rpta;
     }
 
-    public String getPre_unica_persona() {
-        return pre_unica_persona;
+    public String getPre_unico_patron() {
+        return pre_unico_patron;
     }
 
-    public void setPre_unica_persona(String pre_unica_persona) {
-        this.pre_unica_persona = pre_unica_persona;
+    public void setPre_unico_patron(String pre_unico_patron) {
+        this.pre_unico_patron = pre_unico_patron;
     }
 
     public String getPre_cant_maxima_items() {

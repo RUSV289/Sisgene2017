@@ -2,15 +2,19 @@ package com.instituto.cuanto.sisgene.forms;
 
 import java.util.List;
 import com.instituto.cuanto.sisgene.entidad.Acceso;
+import com.instituto.cuanto.sisgene.entidad.Campoopcion;
+import com.instituto.cuanto.sisgene.entidad.Campoportada;
 import com.instituto.cuanto.sisgene.entidad.CaratulaEncuesta;
 import com.instituto.cuanto.sisgene.entidad.Catalogo;
+import com.instituto.cuanto.sisgene.entidad.Ccpp;
+import com.instituto.cuanto.sisgene.entidad.Celdamatriz;
 import com.instituto.cuanto.sisgene.entidad.DetalleEncuesta;
 import com.instituto.cuanto.sisgene.entidad.Dispositivo;
 import com.instituto.cuanto.sisgene.entidad.EstructuraEncuesta;
 import com.instituto.cuanto.sisgene.entidad.Funcionalidad;
-import com.instituto.cuanto.sisgene.entidad.Grupo;
 import com.instituto.cuanto.sisgene.entidad.Item;
 import com.instituto.cuanto.sisgene.entidad.Opcion;
+import com.instituto.cuanto.sisgene.entidad.Patron;
 import com.instituto.cuanto.sisgene.entidad.Persona;
 import com.instituto.cuanto.sisgene.entidad.Pregunta;
 import com.instituto.cuanto.sisgene.entidad.PreguntaItem;
@@ -20,6 +24,7 @@ import com.instituto.cuanto.sisgene.entidad.Seccion;
 import com.instituto.cuanto.sisgene.entidad.SubSeccion;
 import com.instituto.cuanto.sisgene.entidad.TipoDocumento;
 import com.instituto.cuanto.sisgene.entidad.Ubigeo;
+import com.instituto.cuanto.sisgene.entidad.Upc;
 import com.instituto.cuanto.sisgene.entidad.Usuario;
 import com.instituto.cuanto.sisgene.entidad.UsuarioPersona;
 
@@ -39,8 +44,12 @@ public class ValidarAdministradorResponse {
     private List<CaratulaEncuesta> lista_caratula_encuesta;//x
     private List<DetalleEncuesta> lista_det_encuesta;//x
     private List<EstructuraEncuesta> lista_estructura_encuesta;//x
-    private List<Seccion> lista_seccion;//x
-    private List<SubSeccion> lista_sub_seccion;//x
+    private List<Seccion> lista_seccion_cuerpo;//x
+    private List<SubSeccion> lista_sub_seccion_cuerpo;//x
+
+    private List<Seccion> lista_seccion_portada; //nuevo 2017
+    private List<SubSeccion> lista_sub_seccion_portada; //nuevo 2017
+
     private List<Pregunta> lista_pregunta;//x
     private List<PreguntaOpcion> lista_pregunta_opcion;//x
     private List<Opcion> lista_opcion;//x
@@ -54,9 +63,32 @@ public class ValidarAdministradorResponse {
     private List<Acceso> lista_acceso;//x
     private List<TipoDocumento> lista_tipodocumento;//x
     private List<Ubigeo> lista_ubigeo;
-    private List<Grupo> lista_grupo;//x
     private List<Dispositivo> lista_dispositivo;//x
     private List<UsuarioPersona> lista_usuariopersona;
+    private List<Ccpp> lista_ccpp;
+    private List<Upc> lista_upc;
+    private List<Campoopcion> lista_campoopcion;
+    private List<Campoportada> lista_campoportada;
+    private List<Celdamatriz> lista_celdamatriz;
+    private List<Patron> lista_patron;
+
+
+
+    public List<SubSeccion> getLista_sub_seccion_cuerpo() {
+        return lista_sub_seccion_cuerpo;
+    }
+
+    public void setLista_sub_seccion_cuerpo(List<SubSeccion> lista_sub_seccion_cuerpo) {
+        this.lista_sub_seccion_cuerpo = lista_sub_seccion_cuerpo;
+    }
+
+    public List<Seccion> getLista_seccion_cuerpo() {
+        return lista_seccion_cuerpo;
+    }
+
+    public void setLista_seccion_cuerpo(List<Seccion> lista_seccion_cuerpo) {
+        this.lista_seccion_cuerpo = lista_seccion_cuerpo;
+    }
 
     public ValidarAdministradorResponse() {
         //Constructor de la clase ValidarAdministradorResponse
@@ -110,21 +142,6 @@ public class ValidarAdministradorResponse {
         this.lista_estructura_encuesta = lista_estructura_encuesta;
     }
 
-    public List<Seccion> getLista_seccion() {
-        return lista_seccion;
-    }
-
-    public void setLista_seccion(List<Seccion> lista_seccion) {
-        this.lista_seccion = lista_seccion;
-    }
-
-    public List<SubSeccion> getLista_sub_seccion() {
-        return lista_sub_seccion;
-    }
-
-    public void setLista_sub_seccion(List<SubSeccion> lista_sub_seccion) {
-        this.lista_sub_seccion = lista_sub_seccion;
-    }
 
     public List<Pregunta> getLista_pregunta() {
         return lista_pregunta;
@@ -222,13 +239,6 @@ public class ValidarAdministradorResponse {
         this.lista_ubigeo = lista_ubigeo;
     }
 
-    public List<Grupo> getLista_grupo() {
-        return lista_grupo;
-    }
-
-    public void setLista_grupo(List<Grupo> lista_grupo) {
-        this.lista_grupo = lista_grupo;
-    }
 
     public List<Dispositivo> getLista_dispositivo() {
         return lista_dispositivo;
@@ -247,5 +257,67 @@ public class ValidarAdministradorResponse {
     }
 
 
-    
+    public List<Seccion> getLista_seccion_portada() {
+        return lista_seccion_portada;
+    }
+
+    public void setLista_seccion_portada(List<Seccion> lista_seccion_portada) {
+        this.lista_seccion_portada = lista_seccion_portada;
+    }
+
+    public List<SubSeccion> getLista_sub_seccion_portada() {
+        return lista_sub_seccion_portada;
+    }
+
+    public void setLista_sub_seccion_portada(List<SubSeccion> lista_sub_seccion_portada) {
+        this.lista_sub_seccion_portada = lista_sub_seccion_portada;
+    }
+
+    public List<Ccpp> getLista_ccpp() {
+        return lista_ccpp;
+    }
+
+    public void setLista_ccpp(List<Ccpp> lista_ccpp) {
+        this.lista_ccpp = lista_ccpp;
+    }
+
+    public List<Upc> getLista_upc() {
+        return lista_upc;
+    }
+
+    public void setLista_upc(List<Upc> lista_upc) {
+        this.lista_upc = lista_upc;
+    }
+
+    public List<Campoopcion> getLista_campoopcion() {
+        return lista_campoopcion;
+    }
+
+    public void setLista_campoopcion(List<Campoopcion> lista_campoopcion) {
+        this.lista_campoopcion = lista_campoopcion;
+    }
+
+    public List<Campoportada> getLista_campoportada() {
+        return lista_campoportada;
+    }
+
+    public void setLista_campoportada(List<Campoportada> lista_campoportada) {
+        this.lista_campoportada = lista_campoportada;
+    }
+
+    public List<Celdamatriz> getLista_celdamatriz() {
+        return lista_celdamatriz;
+    }
+
+    public void setLista_celdamatriz(List<Celdamatriz> lista_celdamatriz) {
+        this.lista_celdamatriz = lista_celdamatriz;
+    }
+
+    public List<Patron> getLista_patron() {
+        return lista_patron;
+    }
+
+    public void setLista_patron(List<Patron> lista_patron) {
+        this.lista_patron = lista_patron;
+    }
 }

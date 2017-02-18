@@ -240,15 +240,16 @@ public class NombresPersonasEncuestadasActivity extends AppCompatActivity {
         String userUsu = pref.getString("user", null);
         tvNombreUsuario.setText(nombreUsu);
 
-        //grupo
-        String grupo = usuarioDAO.obtenerGrupoPorUsuario(NombresPersonasEncuestadasActivity.this, userUsu);
-        tvGrupo.setText(grupo);
+        //grupo  temporal
+        //String grupo = usuarioDAO.obtenerGrupoPorUsuario(NombresPersonasEncuestadasActivity.this, userUsu);
+        //tvGrupo.setText(grupo);
 
         //fechas
         tvFecha.setText(Util.obtenerFecha());
         CabeceraRespuestaDAO cabeceraRespuestaDAO = new CabeceraRespuestaDAO();
         List<String> fechas = cabeceraRespuestaDAO.obtenerRangoFechasEncuesta(NombresPersonasEncuestadasActivity.this, userUsu);
 
+        /* temporal se cae la app con esto
         if (fechas.get(0) == null)
             tvFechaVigenciaFinal.setText("");
         else
@@ -257,7 +258,7 @@ public class NombresPersonasEncuestadasActivity extends AppCompatActivity {
             tvFechaVigenciaInicio.setText("");
         else
           tvFechaVigenciaInicio.setText((fechas.get(0).toString().trim().substring(8,10))+"/"+(fechas.get(0).toString().trim().substring(5,7))+"/"+(fechas.get(0).toString().trim().substring(0,4)));
-
+*/
 
         //Nombre del supervisor
         String idSupervisor = usuarioDAO.obtenerIDSupervisorXEncuestador(NombresPersonasEncuestadasActivity.this, userUsu);

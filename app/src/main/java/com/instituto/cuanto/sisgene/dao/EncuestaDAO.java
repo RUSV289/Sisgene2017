@@ -96,7 +96,7 @@ public class EncuestaDAO {
                 encuestaPregunta.setPre_comentario((cursor.getString(12) != null) ? cursor.getString(12) : "");
                 encuestaPregunta.setPre_guia_rpta((cursor.getString(13) != null) ? cursor.getString(13) : "");
                 encuestaPregunta.setPre_tipo_rpta((cursor.getString(14) != null) ? cursor.getString(14) : "");
-                encuestaPregunta.setPre_unica_persona((cursor.getString(15) != null) ? cursor.getString(15) : "");
+                encuestaPregunta.setPre_unico_patron((cursor.getString(15) != null) ? cursor.getString(15) : "");
                 encuestaPregunta.setPre_cant_maxima_items((cursor.getString(16) != null) ? cursor.getString(16) : "");
                 encuestaPregunta.setPre_nummaxrptamu((cursor.getString(17) != null) ? cursor.getString(17) : "");
                 encuestaPregunta.setPre_importarordenrptamu((cursor.getString(18) != null) ? cursor.getString(18) : "");
@@ -167,7 +167,7 @@ public class EncuestaDAO {
                 encuestaPregunta.setPre_comentario((cursor.getString(12) != null) ? cursor.getString(12) : "");
                 encuestaPregunta.setPre_guia_rpta((cursor.getString(13) != null) ? cursor.getString(13) : "");
                 encuestaPregunta.setPre_tipo_rpta((cursor.getString(14) != null) ? cursor.getString(14) : "");
-                encuestaPregunta.setPre_unica_persona((cursor.getString(15) != null) ? cursor.getString(15) : "");
+                encuestaPregunta.setPre_unico_patron((cursor.getString(15) != null) ? cursor.getString(15) : "");
                 encuestaPregunta.setPre_cant_maxima_items((cursor.getString(16) != null) ? cursor.getString(16) : "");
                 encuestaPregunta.setPre_nummaxrptamu((cursor.getString(17) != null) ? cursor.getString(17) : "");
                 encuestaPregunta.setPre_importarordenrptamu((cursor.getString(18) != null) ? cursor.getString(18) : "");
@@ -321,7 +321,7 @@ public class EncuestaDAO {
                 encuestaPregunta.setPre_comentario((cursor.getString(12) != null) ? cursor.getString(12) : "");
                 encuestaPregunta.setPre_guia_rpta((cursor.getString(13) != null) ? cursor.getString(13) : "");
                 encuestaPregunta.setPre_tipo_rpta((cursor.getString(14) != null) ? cursor.getString(14) : "");
-                encuestaPregunta.setPre_unica_persona((cursor.getString(15) != null) ? cursor.getString(15) : "");
+                encuestaPregunta.setPre_unico_patron((cursor.getString(15) != null) ? cursor.getString(15) : "");
                 encuestaPregunta.setPre_cant_maxima_items((cursor.getString(16) != null) ? cursor.getString(16) : "");
                 encuestaPregunta.setPre_nummaxrptamu((cursor.getString(17) != null) ? cursor.getString(17) : "");
                 encuestaPregunta.setPre_importarordenrptamu((cursor.getString(18) != null) ? cursor.getString(18) : "");

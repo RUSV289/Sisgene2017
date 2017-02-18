@@ -21,15 +21,19 @@ import com.instituto.cuanto.sisgene.bean.Usuarios;
 import com.instituto.cuanto.sisgene.dao.CargaEncuestaDAO;
 import com.instituto.cuanto.sisgene.dao.UsuarioDAO;
 import com.instituto.cuanto.sisgene.entidad.Acceso;
+import com.instituto.cuanto.sisgene.entidad.Campoopcion;
+import com.instituto.cuanto.sisgene.entidad.Campoportada;
 import com.instituto.cuanto.sisgene.entidad.CaratulaEncuesta;
 import com.instituto.cuanto.sisgene.entidad.Catalogo;
+import com.instituto.cuanto.sisgene.entidad.Ccpp;
+import com.instituto.cuanto.sisgene.entidad.Celdamatriz;
 import com.instituto.cuanto.sisgene.entidad.DetalleEncuesta;
 import com.instituto.cuanto.sisgene.entidad.Dispositivo;
 import com.instituto.cuanto.sisgene.entidad.EstructuraEncuesta;
 import com.instituto.cuanto.sisgene.entidad.Funcionalidad;
-import com.instituto.cuanto.sisgene.entidad.Grupo;
 import com.instituto.cuanto.sisgene.entidad.Item;
 import com.instituto.cuanto.sisgene.entidad.Opcion;
+import com.instituto.cuanto.sisgene.entidad.Patron;
 import com.instituto.cuanto.sisgene.entidad.Persona;
 import com.instituto.cuanto.sisgene.entidad.Pregunta;
 import com.instituto.cuanto.sisgene.entidad.PreguntaItem;
@@ -38,6 +42,7 @@ import com.instituto.cuanto.sisgene.entidad.Rol;
 import com.instituto.cuanto.sisgene.entidad.Seccion;
 import com.instituto.cuanto.sisgene.entidad.SubSeccion;
 import com.instituto.cuanto.sisgene.entidad.TipoDocumento;
+import com.instituto.cuanto.sisgene.entidad.Upc;
 import com.instituto.cuanto.sisgene.entidad.Usuario;
 import com.instituto.cuanto.sisgene.entidad.UsuarioPersona;
 import com.instituto.cuanto.sisgene.forms.ValidarAdministradorRequest;
@@ -85,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
 
         listaRol.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (i == 2) {
+                if (i == 2) { // Si es el usuario se le pedira el codigo de la Encuesta
                     lyCodigo.setVisibility(View.VISIBLE);
                 } else {
                     lyCodigo.setVisibility(View.INVISIBLE);
@@ -242,7 +247,7 @@ public class MainActivity extends AppCompatActivity {
             //String puerto="8085";
 
             //Servidor local, desarollo
-            String ip="192.168.1.101";
+            String ip="192.168.1.107";
             String puerto="8080";
 
             RestAdapter restAdapter = new RestAdapter.Builder()
@@ -324,31 +329,55 @@ public class MainActivity extends AppCompatActivity {
             for (CaratulaEncuesta caraenc : listCaratulaEnc) {
                 cargaDAO.cargarCaratulaEncuesta(MainActivity.this, caraenc.getCae_codigo(), caraenc.getCae_nombre(), caraenc.getCae_descripcion(),
                         caraenc.getCae_finicio(), caraenc.getCae_ffin(), caraenc.getCae_estado(), caraenc.getCae_tipo_dispositivo(),
-                        caraenc.getCae_numero_encuestas_usu(), caraenc.getCae_logo_empresa(), caraenc.getCae_tot_supervisores(), caraenc.getCae_id());
+                        caraenc.getCae_numero_encuestas_usu(), caraenc.getCae_logo_empresa(), caraenc.getCae_tot_supervisores(), caraenc.getCae_id(),
+                        caraenc.getCae_b_nencuesta(), caraenc.getCae_b_departamento(), caraenc.getCae_b_provincia(), caraenc.getCae_b_distrito(), caraenc.getCae_b_ccppnombre(),
+                        caraenc.getCae_b_ccppcategoria(), caraenc.getCae_b_nconglomerado(), caraenc.getCae_b_nzona(), caraenc.getCae_b_nmanzana(), caraenc.getCae_b_nvivienda(),
+                        caraenc.getCae_b_nhogar(), caraenc.getCae_b_area(), caraenc.getCae_b_condicion(), caraenc.getCae_b_avecaljirpas(), caraenc.getCae_b_npuerta(),
+                        caraenc.getCae_b_interior(), caraenc.getCae_b_piso(), caraenc.getCae_b_etasecgru(), caraenc.getCae_b_manzana(), caraenc.getCae_b_lote(),
+                        caraenc.getCae_b_km(), caraenc.getCae_b_nomapeinformante(), caraenc.getCae_b_codinformante(), caraenc.getCae_b_telcel(), caraenc.getCae_b_referencia(),
+                        caraenc.getCae_b_latitud(), caraenc.getCae_b_longitud(), caraenc.getCae_b_nomencuestador(), caraenc.getCae_b_fecvisita1(), caraenc.getCae_b_fecvisita2(),
+                        caraenc.getCae_b_fecvisita3(), caraenc.getCae_b_coddigitador(), caraenc.getCae_b_maquina(), caraenc.getCae_b_fecdigitacion(),
+                        caraenc.getCae_b_codsupervisor(), caraenc.getCae_b_fecsupervision1(), caraenc.getCae_b_fecsupervision2(), caraenc.getCae_b_tipsupervision1(),
+                        caraenc.getCae_b_tipsupervision2(), caraenc.getCae_b_tipencuesta(), caraenc.getCae_b_observaciones());
             }
 
             List<Pregunta> listPregunta = validarResponse.getLista_pregunta();
             for (Pregunta pregunta : listPregunta) {
                 cargaDAO.cargarPregunta(MainActivity.this, pregunta.getPre_id(), pregunta.getPre_numero(), pregunta.getPre_enunciado(),
                         pregunta.getPre_explicativo(), pregunta.getPre_comentario(), pregunta.getPre_guia_rpta(), pregunta.getPre_tipo_rpta(),
-                        pregunta.getPre_unica_persona(), pregunta.getPre_cant_maxima_items(), pregunta.getPre_maxNumRptas(), pregunta.getPre_importaOrdenRptas(),
-                        pregunta.getPre_subtipo(), pregunta.getPre_tiponumerico(), pregunta.getPre_desde(), pregunta.getPre_hasta());
-                System.out.println("REVIREST-- "+pregunta.getPre_enunciado()+ " - "+pregunta.getPre_subtipo()+ " - "+pregunta.getPre_tiponumerico()+" - "+
-                pregunta.getPre_desde()+" - "+pregunta.getPre_hasta());
+                        pregunta.getPre_unico_patron(), pregunta.getPre_cant_maxima_items(), pregunta.getPre_maxNumRptas(), pregunta.getPre_importaOrdenRptas(),
+                        pregunta.getPre_subtipo(), pregunta.getPre_tiponumerico(), pregunta.getPre_desde(), pregunta.getPre_hasta(), pregunta.getPat_id(), pregunta.getPre_importa_orden_rptaABMU(), pregunta.getPre_excluye_ABMU());
+                System.out.println("REVIREST-- " + pregunta.getPre_enunciado() + " - " + pregunta.getPre_subtipo() + " - " + pregunta.getPre_tiponumerico() + " - " +
+                        pregunta.getPre_desde() + " - " + pregunta.getPre_hasta());
             }
 
-            List<Seccion> listaSeccion = validarResponse.getLista_seccion();
+            List<Seccion> listaSeccion = validarResponse.getLista_seccion_cuerpo();
             for (Seccion seccion : listaSeccion) {
                 cargaDAO.cargarSeccion(MainActivity.this, seccion.getSec_nombre(), seccion.getSec_nota(),
-                        seccion.getSec_numero_seccion(), seccion.getSec_id());
+                        seccion.getSec_numero_seccion(), seccion.getSec_id(), seccion.getSec_categoria(), seccion.getCae_id(), seccion.getSec_flag_portada());
             }
 
-            List<SubSeccion> lisSubseccion = validarResponse.getLista_sub_seccion();
+            List<SubSeccion> lisSubseccion = validarResponse.getLista_sub_seccion_cuerpo();
             System.out.println("SUBSECCION TAMAÑO lisSubseccion: "+lisSubseccion.size());
             for (SubSeccion subseccion : lisSubseccion) {
-                cargaDAO.cargarSubseccion(MainActivity.this, subseccion.getSus_nombre(), subseccion.getSus_nota(), subseccion.getSus_numero_subseccion(), subseccion.getSus_id());
-                System.out.println("SUBSECCION PARA BD: "+subseccion.getSus_nombre() + " "+subseccion.getSus_numero_subseccion());
+                cargaDAO.cargarSubseccion(MainActivity.this, subseccion.getSus_nombre(), subseccion.getSus_nota(), subseccion.getSus_numero_subseccion(), subseccion.getSus_id(), subseccion.getCae_id(), subseccion.getSeccion(), subseccion.getSus_flag_portada());
+                System.out.println("SUBSECCION PARA BD: " + subseccion.getSus_nombre() + " " + subseccion.getSus_numero_subseccion());
             }
+
+            List<Seccion> lisSeccionPortada = validarResponse.getLista_seccion_portada();
+            System.out.println("SUBSECCION PORTADA lisSeccionPortada: "+ lisSeccionPortada.size());
+            for(Seccion seccionPortada : lisSeccionPortada){
+                cargaDAO.cargarSeccion(MainActivity.this, seccionPortada.getSec_nombre(), seccionPortada.getSec_nota(),
+                        seccionPortada.getSec_numero_seccion(), seccionPortada.getSec_id(), seccionPortada.getSec_categoria(), seccionPortada.getCae_id(), seccionPortada.getSec_flag_portada());
+            }
+
+            List<SubSeccion> lisSubseccionPortada = validarResponse.getLista_sub_seccion_portada();
+            System.out.println("SUBSECCION TAMAÑO lisSubseccionPortada: "+lisSubseccionPortada.size());
+            for (SubSeccion subseccion : lisSubseccionPortada) {
+                cargaDAO.cargarSubseccion(MainActivity.this, subseccion.getSus_nombre(), subseccion.getSus_nota(), subseccion.getSus_numero_subseccion(), subseccion.getSus_id(), subseccion.getCae_id(), subseccion.getSeccion(), subseccion.getSus_flag_portada());
+                System.out.println("SUBSECCION PARA BD: " + subseccion.getSus_nombre() + " " + subseccion.getSus_numero_subseccion());
+            }
+
 
             List<EstructuraEncuesta> listaEstEnc = validarResponse.getLista_estructura_encuesta();
             for (EstructuraEncuesta estEnc : listaEstEnc) {
@@ -378,14 +407,16 @@ public class MainActivity extends AppCompatActivity {
             List<PreguntaOpcion> listPReguntaOpc = validarResponse.getLista_pregunta_opcion();
             for (PreguntaOpcion preguntaOpcion : listPReguntaOpc) {
                 cargaDAO.cargarPreguntaOpcion(MainActivity.this, preguntaOpcion.getPro_id(), preguntaOpcion.getPre_id(),
-                        preguntaOpcion.getOpc_id(), preguntaOpcion.getPro_numeralOpcion(), preguntaOpcion.getPro_numeroPreguntaSiguiente(),
-                        preguntaOpcion.getPro_idEncuesta(), preguntaOpcion.getPro_valor());
+                        preguntaOpcion.getOpc_id(), preguntaOpcion.getPro_numeralOpcion(), preguntaOpcion.getPro_numeroPreguntaSiguiente(), preguntaOpcion.getPro_valor(),
+                        preguntaOpcion.getCae_id(), preguntaOpcion.getPro_tipo_dato(), preguntaOpcion.getPro_desde(), preguntaOpcion.getPro_hasta(), preguntaOpcion.getPro_valida_fila_MA(),
+                        preguntaOpcion.getPro_parte_rpta(),preguntaOpcion.getPro_nombre_variable());
             }
 
             List<PreguntaItem> listPreguntaItem = validarResponse.getLista_pregunta_item();
             for (PreguntaItem preguntaItem : listPreguntaItem) {
                 cargaDAO.cargarPreguntaItem(MainActivity.this, preguntaItem.getPri_id(), preguntaItem.getPre_id(), preguntaItem.getIte_id(),
-                        preguntaItem.getPri_numeralItem(),  preguntaItem.getPri_valor());
+                        preguntaItem.getPri_numeralItem(),  preguntaItem.getPri_valor(), preguntaItem.getPri_tipo_dato(), preguntaItem.getPri_desde(),
+                        preguntaItem.getPri_hasta(),preguntaItem.getPri_sin_encabezado());
             }
 
             List<Funcionalidad> listFuncionalidad = validarResponse.getLista_funcionalidad();
@@ -423,12 +454,6 @@ public class MainActivity extends AppCompatActivity {
                         usuario.getRol_id());
             }
 
-            List<Grupo> listGrupo = validarResponse.getLista_grupo();
-            for (Grupo grupo : listGrupo) {
-                cargaDAO.cargarGrupo(MainActivity.this, grupo.getGru_id(), grupo.getUsu_id_supervisor(), grupo.getGru_numero(),
-                        grupo.getGru_tot_encuestadores());
-            }
-
             List<Dispositivo> listaDispositivo = validarResponse.getLista_dispositivo();
             for (Dispositivo dispositivo : listaDispositivo) {
                 cargaDAO.cargarDispositivo(MainActivity.this, dispositivo.getDis_id(), dispositivo.getDis_nombre(), dispositivo.getDis_descripcion(),
@@ -437,9 +462,46 @@ public class MainActivity extends AppCompatActivity {
 
             List<UsuarioPersona> listUsuarioPersonas = validarResponse.getLista_usuariopersona();
             for (UsuarioPersona usuper : listUsuarioPersonas) {
-                cargaDAO.cargarUsuarioPersona(MainActivity.this, usuper.getUsp_id(), usuper.getPer_id(), usuper.getUsu_id(), usuper.getGru_id(),
-                        usuper.getDis_id(), usuper.getUbi_id(), usuper.getCae_id(), usuper.getUsp_estado(), usuper.getUsp_desde_numEnc(), usuper.getUsp_hasta_numEnc(),
+                cargaDAO.cargarUsuarioPersona(MainActivity.this, usuper.getUsp_id(), usuper.getPer_id(), usuper.getUsu_id(),
+                        usuper.getCae_id(),
                         usuper.getUsp_tot_encRealizadas(), usuper.getUsp_tot_encAsignadas());
+            }
+
+            List<Ccpp> lisCcpp = validarResponse.getLista_ccpp();
+            for(Ccpp ccpp : lisCcpp){
+                cargaDAO.cargarCcpp(MainActivity.this, ccpp.getCcpp_id(), ccpp.getUbi_id(), ccpp.getCcpp_codigo(),
+                        ccpp.getCcpp_centro_poblado(), ccpp.getCcpp_area(), ccpp.getCcpp_cod_area(), ccpp.getCcpp_categoria(),
+                        ccpp.getCcpp_cod_categoria());
+            }
+
+            List<Upc> lisUpc = validarResponse.getLista_upc();
+            for(Upc upc : lisUpc){
+                cargaDAO.cargarUpc(MainActivity.this, upc.getUpc_id(), upc.getCcpp_id(), upc.getDis_id(), upc.getUsp_id_enc(),
+                        upc.getUsp_id_sup(), upc.getCae_id(), upc.getUpc_conglomerado(), upc.getUpc_tot_enc_congl(),
+                        upc.getUpc_desde_numenc(), upc.getUpc_hasta_numenc(), upc.getUpc_categoria(),upc.getUpc_cod_categoria());
+            }
+
+            List<Campoopcion> lisCampoopcion = validarResponse.getLista_campoopcion();
+            for(Campoopcion campoopcion : lisCampoopcion){
+                cargaDAO.cargarCampoopcion(MainActivity.this, campoopcion.getCao_id(), campoopcion.getCap_id(),
+                        campoopcion.getCao_codigo(), campoopcion.getCao_opcion());
+            }
+
+            List<Campoportada> lisCampoportada = validarResponse.getLista_campoportada();
+            for(Campoportada campoportada : lisCampoportada){
+                cargaDAO.cargarCampoportada(MainActivity.this, campoportada.getCap_id(), campoportada.getSec_id(),
+                        campoportada.getSus_id(), campoportada.getCae_id(), campoportada.getCap_numero(), campoportada.getCap_descripcion());
+            }
+
+            List<Celdamatriz> lisCeldamatriz = validarResponse.getLista_celdamatriz();
+            for(Celdamatriz celdamatriz : lisCeldamatriz){
+                cargaDAO.cargarCeldamatriz(MainActivity.this, celdamatriz.getCem_id(), celdamatriz.getPro_id(), celdamatriz.getPri_id(),
+                        celdamatriz.getCem_fila(), celdamatriz.getCem_columna(), celdamatriz.getCem_tipo_dato(), celdamatriz.getCem_desde(), celdamatriz.getCem_hasta());
+            }
+
+            List<Patron> lisPatron = validarResponse.getLista_patron();
+            for(Patron patron : lisPatron){
+                cargaDAO.cargarPatron(MainActivity.this, patron.getPat_id(), patron.getPat_descripcion(), patron.getPat_max_items());
             }
 
         } catch (Exception e) {

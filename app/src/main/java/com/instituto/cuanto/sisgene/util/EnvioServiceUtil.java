@@ -156,7 +156,7 @@ public class EnvioServiceUtil {
             //String puerto="8085";
 
             //Servidor local, desarollo
-            String ip="192.168.1.102";
+            String ip="192.168.1.107";
             String puerto="8080";
 
             RestAdapter restAdapter = new RestAdapter.Builder()

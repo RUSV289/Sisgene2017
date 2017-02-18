@@ -11,7 +11,45 @@ public class PreguntaItem {
     private String ite_id;
     private String pri_numeralItem;
     private String pri_valor;
-    
+
+    //Nuevos campo version 2 sisgene 2017
+    private String pri_tipo_dato;
+    private String pri_desde;
+    private String pri_hasta;
+    private String pri_sin_encabezado;
+
+    public String getPri_tipo_dato() {
+        return pri_tipo_dato;
+    }
+
+    public void setPri_tipo_dato(String pri_tipo_dato) {
+        this.pri_tipo_dato = pri_tipo_dato;
+    }
+
+    public String getPri_desde() {
+        return pri_desde;
+    }
+
+    public void setPri_desde(String pri_desde) {
+        this.pri_desde = pri_desde;
+    }
+
+    public String getPri_hasta() {
+        return pri_hasta;
+    }
+
+    public void setPri_hasta(String pri_hasta) {
+        this.pri_hasta = pri_hasta;
+    }
+
+    public String getPri_sin_encabezado() {
+        return pri_sin_encabezado;
+    }
+
+    public void setPri_sin_encabezado(String pri_sin_encabezado) {
+        this.pri_sin_encabezado = pri_sin_encabezado;
+    }
+
     public PreguntaItem(){
         //Constructor de la clase PreguntaItem
     }

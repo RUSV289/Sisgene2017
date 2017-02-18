@@ -13,7 +13,7 @@ public class Pregunta {
     private String pre_comentario;
     private String pre_guia_rpta;
     private String pre_tipo_rpta;
-    private String pre_unica_persona;
+    private String pre_unico_patron;
     private String pre_cant_maxima_items;
     private String pre_maxNumRptas;
     private String pre_importaOrdenRptas;
@@ -23,7 +23,47 @@ public class Pregunta {
     private String pre_tiponumerico;
     private String pre_desde;
     private String pre_hasta;
-    
+
+
+    //nuevos campos sisgene version 2 2017
+    private String pat_id;
+    private String pre_importa_orden_rptaABMU;
+    private String pre_excluye_ABMU;
+
+
+
+    public String getPre_unico_patron() {
+        return pre_unico_patron;
+    }
+
+    public void setPre_unico_patron(String pre_unico_patron) {
+        this.pre_unico_patron = pre_unico_patron;
+    }
+
+    public String getPat_id() {
+        return pat_id;
+    }
+
+    public void setPat_id(String pat_id) {
+        this.pat_id = pat_id;
+    }
+
+    public String getPre_importa_orden_rptaABMU() {
+        return pre_importa_orden_rptaABMU;
+    }
+
+    public void setPre_importa_orden_rptaABMU(String pre_importa_orden_rptaABMU) {
+        this.pre_importa_orden_rptaABMU = pre_importa_orden_rptaABMU;
+    }
+
+    public String getPre_excluye_ABMU() {
+        return pre_excluye_ABMU;
+    }
+
+    public void setPre_excluye_ABMU(String pre_excluye_ABMU) {
+        this.pre_excluye_ABMU = pre_excluye_ABMU;
+    }
+
     public Pregunta(){
         //Constructor de la clase Pregunta
     }
@@ -84,13 +124,6 @@ public class Pregunta {
         this.pre_tipo_rpta = pre_tipo_rpta;
     }
 
-    public String getPre_unica_persona() {
-        return pre_unica_persona;
-    }
-
-    public void setPre_unica_persona(String pre_unica_persona) {
-        this.pre_unica_persona = pre_unica_persona;
-    }
 
     public String getPre_cant_maxima_items() {
         return pre_cant_maxima_items;

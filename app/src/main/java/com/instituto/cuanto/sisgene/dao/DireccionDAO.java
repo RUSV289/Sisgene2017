@@ -7,7 +7,7 @@ import android.database.Cursor;
  * Created by Jesus on 21/11/2015.
  */
 public class DireccionDAO {
-
+/*
     public DireccionDAO(){}
 
     public boolean insertarDireccion(Context context, String direccion) {
@@ -17,7 +17,7 @@ public class DireccionDAO {
         boolean response = false;
 
         try {
-            String sql = " INSERT INTO direccion (dir_tipo_ubicacion)" +
+            String sql = " INSERT INTO cab_enc_rpta (caer_avecaljirpas)" +
                     " VALUES (?)";
 
             dataBaseHelper.db.execSQL(sql, arg);
@@ -65,4 +65,5 @@ public class DireccionDAO {
         return 0;
 
     }
+    */
 }

@@ -177,15 +177,12 @@ public class PreguntasActivity extends AppCompatActivity {
         //campoRespuestaAB = (EditText)findViewById(R.id.etRespuestaPreguntaEncuestado);
         //campoRespuestaAB.setInputType(InputType.TYPE_CLASS_NUMBER);
 
-
         tvSubSeccion = (TextView) findViewById(R.id.tvSubSeccion);
         TipoPreguntaAbiertaAdapter.tipoPreguntaAbiertaAdapter = new TipoPreguntaAbiertaAdapter();
         TipoPreguntaUnicaAdapter.tipoPreguntaUnicaAdapter = new TipoPreguntaUnicaAdapter();
         //miListaTipoPreguntaAbierta = new ArrayList<>();
         scrollView = new ScrollView(PreguntasActivity.this);
         listPreguntaItems = new ArrayList<>();
-
-
 
         btnSiguiente.setOnClickListener(btnSiguientesetOnClickListener);
         btnGuardarEncuesta.setOnClickListener(btnGuardarEncuestasetOnClickListener);
@@ -273,7 +270,7 @@ public class PreguntasActivity extends AppCompatActivity {
         tipoPreguntaActual = encuestaPregunta.getPre_tipo_rpta();
         enunciadoPregunta = encuestaPregunta.getPre_enunciado();
         numeroPreguntaBD = encuestaPregunta.getPre_numero();
-        encuestarTodos = Integer.parseInt(encuestaPregunta.getPre_unica_persona()); // 0:todos   -  1: una persona
+        encuestarTodos = Integer.parseInt(encuestaPregunta.getPre_unico_patron()); // 0:todos   -  1: una persona
         comentario = encuestaPregunta.getPre_comentario();
 
         //para las restricciones en las respuesta de tipo abierta
@@ -281,6 +278,8 @@ public class PreguntasActivity extends AppCompatActivity {
         tiponumerico = encuestaPregunta.getPre_tiponumerico(); // decimal, entero
         desde = encuestaPregunta.getPre_desde();
         hasta = encuestaPregunta.getPre_hasta();
+
+
 
         //vemos si esa pregunta fue respondida
         //obtener el id de la ultima cabecera
@@ -548,7 +547,7 @@ public class PreguntasActivity extends AppCompatActivity {
             tipoPreguntaActual = encuestaPregunta.getPre_tipo_rpta();
             enunciadoPregunta = encuestaPregunta.getPre_enunciado();
             numeroPreguntaBD = encuestaPregunta.getPre_numero();
-            encuestarTodos = Integer.parseInt(encuestaPregunta.getPre_unica_persona()); // 0:todos   -  1: una persona
+            encuestarTodos = Integer.parseInt(encuestaPregunta.getPre_unico_patron()); // 0:todos   -  1: una persona
 
 
             //para las restricciones en las respuesta de tipo abierta
@@ -653,7 +652,7 @@ public class PreguntasActivity extends AppCompatActivity {
             tipoPreguntaActual = encuestaPregunta.getPre_tipo_rpta();
             enunciadoPregunta = encuestaPregunta.getPre_enunciado();
             numeroPreguntaBD = encuestaPregunta.getPre_numero();
-            encuestarTodos = Integer.parseInt(encuestaPregunta.getPre_unica_persona()); // 0:todos   -  1: una persona
+            encuestarTodos = Integer.parseInt(encuestaPregunta.getPre_unico_patron()); // 0:todos   -  1: una persona
 
 
             //para las restricciones en las respuesta de tipo abierta
